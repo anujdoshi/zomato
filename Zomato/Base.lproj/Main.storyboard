@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +10,70 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Zomato" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="zomato" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TVh-ys-XRu">
+                                <rect key="frame" x="132.66666666666666" y="81" width="148.99999999999997" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="149" id="M1v-vB-lbW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="40"/>
+                                <color key="textColor" red="0.79607843140000001" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anise-aroma-art-bazaar-277253" translatesAutoresizingMaskIntoConstraints="NO" id="s9y-P1-a5s">
+                                <rect key="frame" x="87" y="389" width="240.00000000000023" height="128.00000000000023"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Wp1-1a-qCh"/>
+                                    <constraint firstAttribute="height" constant="128" id="wt4-bg-cJp"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cnx-BA-eKB">
+                                <rect key="frame" x="20" y="781" width="374" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="H1F-Uk-QUq"/>
+                                    <constraint firstAttribute="width" constant="374" id="aJ4-K4-gFh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="40"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" red="0.79607843140000001" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykp-j3-8Tk">
+                                <rect key="frame" x="20" y="681" width="374" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="8us-N8-PeD"/>
+                                    <constraint firstAttribute="height" constant="53" id="O8M-YR-3KG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="40"/>
+                                <state key="normal" title="Register">
+                                    <color key="titleColor" red="0.79607843140000001" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="TVh-ys-XRu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="37" id="C0g-Cx-Mzc"/>
+                            <constraint firstItem="TVh-ys-XRu" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MAJ-05-Iux"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Cnx-BA-eKB" secondAttribute="bottom" constant="28" id="au1-BF-pyV"/>
+                            <constraint firstItem="ykp-j3-8Tk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="mGa-j5-QUa"/>
+                            <constraint firstItem="Cnx-BA-eKB" firstAttribute="top" secondItem="ykp-j3-8Tk" secondAttribute="bottom" constant="47" id="r8R-hq-8hl"/>
+                            <constraint firstItem="s9y-P1-a5s" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="sa5-AR-TAI"/>
+                            <constraint firstItem="s9y-P1-a5s" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vc6-eK-Kif"/>
+                            <constraint firstItem="Cnx-BA-eKB" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="xmz-iz-Pdn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="100.44642857142857"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="anise-aroma-art-bazaar-277253" width="895" height="1003"/>
+    </resources>
 </document>
