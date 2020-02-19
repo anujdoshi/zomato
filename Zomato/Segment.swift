@@ -1,28 +1,28 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  Zomato
 //
-//  Created by Anuj Doshi on 18/02/20.
+//  Created by Anuj Doshi on 19/02/20.
 //  Copyright © 2020 Anuj Doshi. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate{
-    
+class Segment: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
     @IBOutlet weak var sliderCollectionView: UICollectionView!
     var timer = Timer()
     var counter = 0
     
-    @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    var vc1 : UIView!
+    var vc2 : UIView!
     var imgArr = [UIImage(named: "food"),UIImage(named: "food1"),UIImage(named: "food2"),UIImage(named: "food3"),UIImage(named: "food4"),UIImage(named: "food5")]
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerButton.layer.cornerRadius = 15.0
-        registerButton.layer.borderWidth = 1.0
-        loginButton.layer.cornerRadius = 15.0
-        loginButton.layer.borderWidth = 1.0
+        vc1  = UIViewController(nibName: "LoginViewController", bundle: nil).view
+        vc2 = UIViewController(nibName: "RegisterViewController", bundle: nil).view
+        containerView.addSubview(vc1)
+        containerView.addSubview(vc2)
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
         }
@@ -54,14 +54,23 @@ class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionV
         return cell
     }
     
-    @IBAction func registerButtonPress(_ sender: UIButton) {
-    }
-    @IBAction func loginButtonPress(_ sender: UIButton) {
-        performSegue(withIdentifier: "goToLogin", sender: self)
-    }
     
+    @IBAction func segmentControl(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            vc1.isHidden = true
+            vc2.isHidden = false
+            break
+        case 1:
+              vc1.isHidden = false
+              vc2.isHidden = true
+            break
+        default:
+            break
+        }
+    }
 }
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension Segment: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -80,4 +89,3 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return 0.0
     }
 }
-
