@@ -1,0 +1,6 @@
+framework module Pods_Zomato {
+  umbrella header "Pods-Zomato-umbrella.h"
+
+  export *
+  module * { export * }
+}
