@@ -11,10 +11,16 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    let window: UIWindow? = nil
+    let userDefaullt = UserDefaults.standard
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if userDefaullt.bool(forKey: "usersignedin") == true{
+           
+            self.userDefaullt.synchronize()
+            self.window?.rootViewController?.performSegue(withIdentifier: "goToHome", sender: nil)
+        }
         return true
     }
 
