@@ -55,11 +55,22 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="OsG-fd-onN">
+                        <rect key="frame" x="317" y="73" width="94" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="94" id="sDU-y6-NNx"/>
+                        </constraints>
+                        <connections>
+                            <action selector="stepperValueChange:" destination="KGk-i7-Jjw" eventType="valueChanged" id="YEB-6n-Skv"/>
+                        </connections>
+                    </stepper>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="OsG-fd-onN" firstAttribute="top" secondItem="NNc-ov-5Nu" secondAttribute="bottom" constant="19" id="72N-nG-oug"/>
                     <constraint firstItem="iRH-G3-qKo" firstAttribute="top" secondItem="NNc-ov-5Nu" secondAttribute="bottom" constant="26" id="AGq-nv-pV8"/>
                     <constraint firstAttribute="bottom" secondItem="zsf-NS-bMf" secondAttribute="bottom" constant="21" id="Fb0-K8-SqW"/>
                     <constraint firstItem="wZC-fE-7Vm" firstAttribute="leading" secondItem="iRH-G3-qKo" secondAttribute="trailing" constant="32" id="GLX-CN-8Qj"/>
+                    <constraint firstAttribute="trailing" secondItem="OsG-fd-onN" secondAttribute="trailing" constant="18" id="HGe-ST-kYv"/>
                     <constraint firstItem="NNc-ov-5Nu" firstAttribute="leading" secondItem="zsf-NS-bMf" secondAttribute="trailing" constant="8" id="IGG-sh-mDM"/>
                     <constraint firstItem="iRH-G3-qKo" firstAttribute="leading" secondItem="zsf-NS-bMf" secondAttribute="trailing" constant="8" id="Moe-mr-FsM"/>
                     <constraint firstItem="wZC-fE-7Vm" firstAttribute="top" secondItem="NNc-ov-5Nu" secondAttribute="bottom" constant="19" id="O7P-qJ-cbm"/>
@@ -67,6 +78,7 @@
                     <constraint firstItem="NNc-ov-5Nu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="33" id="TOb-sb-xql"/>
                     <constraint firstItem="zsf-NS-bMf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="22" id="aHE-Po-hf8"/>
                     <constraint firstAttribute="trailing" secondItem="NNc-ov-5Nu" secondAttribute="trailing" constant="22" id="c2Z-NT-Gjn"/>
+                    <constraint firstItem="OsG-fd-onN" firstAttribute="leading" secondItem="iRH-G3-qKo" secondAttribute="trailing" constant="27" id="fhU-qD-8SG"/>
                     <constraint firstAttribute="trailing" secondItem="wZC-fE-7Vm" secondAttribute="trailing" constant="22" id="iWH-GR-KUa"/>
                 </constraints>
             </tableViewCellContentView>
@@ -77,6 +89,7 @@
                 <outlet property="foodName" destination="NNc-ov-5Nu" id="tUQ-bs-3PN"/>
                 <outlet property="foodPrice" destination="iRH-G3-qKo" id="odw-rE-IQI"/>
                 <outlet property="imageViewFood" destination="zsf-NS-bMf" id="bhY-nE-FdT"/>
+                <outlet property="stepperOutlet" destination="OsG-fd-onN" id="S5w-d6-KOG"/>
             </connections>
             <point key="canvasLocation" x="210.86956521739131" y="153.01339285714286"/>
         </tableViewCell>

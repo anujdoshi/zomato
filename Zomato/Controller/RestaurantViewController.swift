@@ -9,8 +9,9 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
+    @IBOutlet var searchBar: UISearchBar!
     var restaurentArray = [RestaurentModel]()
     var timer = Timer()
     var restaurentId : Int = 0
@@ -18,6 +19,8 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "RestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
         getApi()
         
     }
@@ -124,5 +127,55 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
         
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //
+        if (searchBar.text?.count)! > 2 {
+            getSearchRestaurentDetailApi(food_name: searchText)
+        }
+        
+    }
+    func getSearchRestaurentDetailApi(food_name:String){
+        restaurentArray.removeAll()
+        tableView.reloadData()
+        
+        let url = URL(string: "http://192.168.2.226:3002/food/search")
+        var request = URLRequest(url: url!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        let parameters: [String: Any] = ["food_name":food_name]
+        request.httpBody = parameters.percentEncoded()
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil else {
+                print("error", error ?? "Unknown error")
+                return
+            }
+
+            guard (200 ... 299) ~= response.statusCode else {
+                print("statusCode should be 2xx, but is \(response.statusCode)")
+                print("response = \(response)")
+                return
+            }
+
+            //let responseString = String(data: data, encoding: .utf8)
+            let js = try! JSON(data: data)
+            //let responseString = String(data: data, encoding: .utf8)
+            DispatchQueue.main.async(){
+                self.getData(json: js)
+            }
+        }
+
+        task.resume()
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        restaurentArray.removeAll()
+        tableView.reloadData()
+        searchBar.showsCancelButton = true
+        getApi()
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate{
     //View Outlet's
     @IBOutlet weak var sliderCollectionView: UICollectionView!

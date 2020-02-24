@@ -9,16 +9,18 @@
 import UIKit
 
 class RestaurentMenuTableViewCell: UITableViewCell {
+    var foodOrder = [Order]()
     let texts = UILabel(frame: CGRect(x:270,y:80,width: 20,height: 20))
     @IBOutlet var addButtonOutlet: UIButton!
     @IBOutlet var imageViewFood: UIImageView!
     @IBOutlet var foodAddButton: UIButton!
     @IBOutlet var foodPrice: UILabel!
     @IBOutlet var foodName: UILabel!
+    @IBOutlet var stepperOutlet: UIStepper!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        stepperOutlet.isHidden = true
     }
     func updateUI(){
         imageViewFood.layer.borderWidth = 1.0
@@ -32,23 +34,21 @@ class RestaurentMenuTableViewCell: UITableViewCell {
     
     @IBAction func addButton(_ sender: UIButton) {
         addButtonOutlet.isHidden = true
-        
-        let steeper = UIStepper(frame: CGRect(x:290, y: 80, width: 0, height: 0))
-        steeper.minimumValue = 1.0
-        steeper.maximumValue = 10.0
-        steeper.tintColor = UIColor.red
-        steeper.addTarget(self, action: #selector(self.stepperValueChanged(_:)), for: .valueChanged)
+        stepperOutlet.isHidden = false
+        stepperOutlet.maximumValue = 10.0
+        stepperOutlet.minimumValue = 0.0
 
-        self.addSubview(steeper)
     }
     
-    @objc func stepperValueChanged(_ sender:UIStepper!)
-    {
-        
+
+    @IBAction func stepperValueChange(_ sender: UIStepper) {
+        let order = Order()
+        order.foodId = stepperOutlet.tag
+        order.qty = Int(sender.value)
+        foodOrder.append(order)
         texts.text = ""
         texts.text = "\(Int(sender.value))"
         self.addSubview(texts)
-        print("UIStepper is now \(Int(sender.value))")
+        //print("UIStepper is now \(Int(sender.value))")
     }
-
 }

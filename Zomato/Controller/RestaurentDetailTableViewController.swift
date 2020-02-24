@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 class RestaurentDetailTableViewController: UITableViewController {
     var foodMenuArray = [RestaurentMenuModel]()
+    var foodOrder = [Order]()
     //@IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +28,13 @@ class RestaurentDetailTableViewController: UITableViewController {
         cell.foodName.text = foodMenuArray[indexPath.row].foodName
         cell.foodPrice.text = "💰\(foodMenuArray[indexPath.row].foodAmount)"
         cell.imageViewFood.image = UIImage(data: data as! Data)
-        
+        cell.stepperOutlet.tag = foodMenuArray[indexPath.row].foodId
+    
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     func getRestaurentDetailApi(id:Int){

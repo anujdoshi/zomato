@@ -14,4 +14,5 @@ class RestaurentMenuModel{
     var foodType:String = ""
     var foodAmount:Int = 0
     var foodImage:String = ""
+    var foodQty:Int = 0
 }

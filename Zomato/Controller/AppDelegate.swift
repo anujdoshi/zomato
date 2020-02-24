@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+var loginEmail:String = ""
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

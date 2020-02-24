@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+
 class SegmentViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate{
     //TextField Outlet's
     let userDefaullt = UserDefaults.standard
@@ -47,6 +48,9 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         passwordTextField.resignFirstResponder()
     }
     override func viewDidAppear(_ animated: Bool) {
+        if userDefaullt.bool(forKey: "usersignedin"){
+            performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
+        }
         scrollViewOutlet.bounces = false
         scrollViewOutlet.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
         scrollViewOutlet.contentSize.width = 1.0
@@ -91,17 +95,32 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
             }
             let json = try! JSON(data: data)
             //let responseString = String(data: data, encoding: .utf8)
+            print(json)
             //print("responseString = \(json["message"])")
             if json["message"] == "User Logged succesfully"{
                 DispatchQueue.main.async(){
+                    loginEmail = self.emailTextField.text!
                     self.userDefaullt.set(true, forKey: "usersignedin")
                     self.userDefaullt.synchronize()
                     self.performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
                 }
             }
+            if json["message"] == "Incoorect password or Email" {
+                self.createAlert(message: "Incorect Email or Password Please Try Agian!!!")
+            }
+            if json["message"] == "Email does not exits"{
+                self.createAlert(message: "Please register first.Because this email \(email ?? "") is not saved in our database.")
+                
+            }
         }
 
         task.resume()
+    }
+    func createAlert(message:String){
+        let alert = UIAlertController(title: "Login", message:message, preferredStyle:.alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgArr.count

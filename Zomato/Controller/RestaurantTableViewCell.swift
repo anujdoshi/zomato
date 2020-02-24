@@ -19,6 +19,10 @@ class RestaurantTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        restaurantImage.layer.borderWidth = 1
+        restaurantImage.layer.cornerRadius = restaurantImage.frame.height/2
+        restaurantImage.layer.masksToBounds = false
+        restaurantImage.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
