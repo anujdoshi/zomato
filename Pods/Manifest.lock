@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.0.2)
+  - GeometricLoaders (1.1.1)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
+  - GeometricLoaders
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - GeometricLoaders
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
+  GeometricLoaders: 4fbbeb569cf0ea647c620a9ffb87c9e63812e743
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 420f825e66003deacb0b1112075d212ec032a064
+PODFILE CHECKSUM: 1294180d590716eea8e44b9c7b74e4165c81ae17
 
 COCOAPODS: 1.8.4

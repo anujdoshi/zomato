@@ -9,24 +9,45 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import GeometricLoaders
+var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+var VW_overlay: UIView = UIView()
 var rid:Int = 0
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
-    
+    var container: CircleLoader?
     @IBOutlet var searchBar: UISearchBar!
     var restaurentArray = [RestaurentModel]()
     var timer = Timer()
     var restaurentId : Int = 0
+    
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         tableView.register(UINib(nibName: "RestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         searchBar.delegate = self
         searchBar.showsCancelButton = true
-        getApi()
-        
+        loadingActivity()
     }
-    
+    func loadingActivity(){
+            VW_overlay = UIView(frame: UIScreen.main.bounds)
+            VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+
+            activityIndicatorView = UIActivityIndicatorView(style: .large)
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
+            activityIndicatorView.color = UIColor.red
+            activityIndicatorView.center = VW_overlay.center
+
+            
+            VW_overlay.addSubview(activityIndicatorView)
+            VW_overlay.center = view.center
+        
+            view.addSubview(VW_overlay)
+            activityIndicatorView.startAnimating()
+            perform(#selector(self.getApi), with: activityIndicatorView, afterDelay: 0.01)
+
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restaurentArray.count
     }
@@ -36,11 +57,6 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurantTableViewCell
         let urlString = try! restaurentArray[indexPath.row].photo.asURL()
         let data = NSData(contentsOf: urlString)
-        print(restaurentArray[indexPath.row].phonenumber)
-        print(restaurentArray[indexPath.row].restauren_name)
-        print(restaurentArray[indexPath.row].restaurentType)
-        print(restaurentArray[indexPath.row].openingHour)
-        print(urlString)
         cell.restaurantName.text = restaurentArray[indexPath.row].restauren_name
         //cell.restaurantPhoneNumber.text = restaurentArray[indexPath.row].phonenumber
         cell.restaurantType.text = restaurentArray[indexPath.row].restaurentType
@@ -54,11 +70,10 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         getRestaurentDetailApi(id:restaurentId)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    func getApi(){
+    @objc func getApi(){
         let jsonUrl = "http://192.168.2.226:3002/res/restaurents"
         let url = URL(string: jsonUrl)
         AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
-            print(response)
             let json : JSON = JSON(response.value)
             for i in 0..<json.count{
                 let id = json[i]["r_id"]
@@ -77,7 +92,8 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 self.restaurentArray.append(model)
                 self.tableView.reloadData()
             }
-//            self.getData(json: data)
+            activityIndicatorView.stopAnimating()
+            VW_overlay.isHidden = true
         })
     }
     func getData(json:JSON){

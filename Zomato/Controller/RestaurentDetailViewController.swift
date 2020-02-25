@@ -24,14 +24,15 @@ class RestaurentDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         restaurentId = id
-        getRestaurentDetailApi(id: restaurentId)
-        
+        getRestaurentDetailApi(id: rid)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     override func viewDidAppear(_ animated: Bool) {
         scrollView.bounces = false
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
         scrollView.contentSize.width = 1.0
     }
+    
     func getRestaurentDetailApi(id:Int){
         let url = URL(string: "http://192.168.2.226:3002/res/restaurents/resdetail")
         var request = URLRequest(url: url!)
@@ -67,7 +68,9 @@ class RestaurentDetailViewController: UIViewController {
                 self.imageView.image = UIImage(data: (datas as Data?)!)
             }
         }
-
+        
         task.resume()
+        activityIndicatorView.stopAnimating()
+        VW_overlay.isHidden = true
     }
 }

@@ -6,6 +6,8 @@ target 'Zomato' do
   use_frameworks!
 
   # Pods for Zomato
-    pod 'Alamofire'
     pod 'SwiftyJSON'
+    pod 'Alamofire'
+    pod 'GeometricLoaders'
+    
 end

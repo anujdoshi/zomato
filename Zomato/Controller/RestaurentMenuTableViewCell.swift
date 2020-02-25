@@ -53,7 +53,6 @@ class RestaurentMenuTableViewCell: UITableViewCell {
         texts.text = ""
         texts.text = "\(Int(sender.value))"
         self.addSubview(texts)
-        //print("UIStepper is now \(Int(sender.value))")
     }
     func getFoodDetails(id:Int){
         let url = URL(string: "http://192.168.2.226:3002/food/fooddetails")
