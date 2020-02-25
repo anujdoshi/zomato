@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if userDefaullt.bool(forKey: "usersignedin") == true{
-           
+            loginEmail = userDefaullt.value(forKey: "usersignedinemail") as! String
+            
             self.userDefaullt.synchronize()
             self.window?.rootViewController?.performSegue(withIdentifier: "goToHome", sender: nil)
         }

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+var rid:Int = 0
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
     @IBOutlet var searchBar: UISearchBar!
@@ -18,6 +19,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
         tableView.register(UINib(nibName: "RestaurantTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         searchBar.delegate = self
         searchBar.showsCancelButton = true
@@ -34,16 +36,20 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurantTableViewCell
         let urlString = try! restaurentArray[indexPath.row].photo.asURL()
         let data = NSData(contentsOf: urlString)
-        
+        print(restaurentArray[indexPath.row].phonenumber)
+        print(restaurentArray[indexPath.row].restauren_name)
+        print(restaurentArray[indexPath.row].restaurentType)
+        print(restaurentArray[indexPath.row].openingHour)
+        print(urlString)
         cell.restaurantName.text = restaurentArray[indexPath.row].restauren_name
-        cell.restaurantPhoneNumber.text = restaurentArray[indexPath.row].phonenumber
+        //cell.restaurantPhoneNumber.text = restaurentArray[indexPath.row].phonenumber
         cell.restaurantType.text = restaurentArray[indexPath.row].restaurentType
         cell.openingHours.text = restaurentArray[indexPath.row].openingHour
-        cell.restaurantImage.image = UIImage(data: data as! Data)
+        cell.restaurantImage.image = UIImage(data: data! as Data)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        rid = restaurentArray[indexPath.row].id
         restaurentId = restaurentArray[indexPath.row].id
         getRestaurentDetailApi(id:restaurentId)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -51,15 +57,28 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     func getApi(){
         let jsonUrl = "http://192.168.2.226:3002/res/restaurents"
         let url = URL(string: jsonUrl)
-        Alamofire.request(url!,method: .get).responseJSON { (response) in
-            
-            if response.result.isSuccess{
-                let musicJSON : JSON = JSON(response.result.value!)
-                self.getData(json: musicJSON)
-            }else{
-                print("error")
+        AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
+            print(response)
+            let json : JSON = JSON(response.value)
+            for i in 0..<json.count{
+                let id = json[i]["r_id"]
+                let name = json[i]["restaurant_name"]
+                let type = json[i]["cuisin_type"]
+                let photo = json[i]["photos"]
+                let opening = json[i]["opening_hours"]
+                let phoneNumber = json[i]["phone_no"]
+                let model = RestaurentModel()
+                model.id = id.int!
+                model.restauren_name = name.string!
+                model.restaurentType = type.string!
+                model.photo = photo.string!
+                model.openingHour = opening.string!
+                model.phonenumber = phoneNumber.string!
+                self.restaurentArray.append(model)
+                self.tableView.reloadData()
             }
-        }
+//            self.getData(json: data)
+        })
     }
     func getData(json:JSON){
     

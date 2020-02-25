@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3582463A7FAA8126173BACD5 /* Pods_Zomato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F7CCED40B84DC99DDB8AE6 /* Pods_Zomato.framework */; };
+		65A12FAE4770C6731E9257E1 /* Pods_Zomato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ECAA5D06C65259A84568FEA /* Pods_Zomato.framework */; };
 		ED0C90CA23FBD0E9000FD8E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90C923FBD0E9000FD8E8 /* AppDelegate.swift */; };
 		ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90CB23FBD0E9000FD8E8 /* SceneDelegate.swift */; };
 		ED0C90CE23FBD0E9000FD8E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90CD23FBD0E9000FD8E8 /* ViewController.swift */; };
@@ -19,6 +19,7 @@
 		ED3A5ABE23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */; };
 		ED3A5AC023FFE4E70038C882 /* RestaurentMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */; };
 		ED3A5AC223FFFFD00038C882 /* RestaurentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */; };
+		ED64929E2404EA500061F058 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */; };
 		ED6C5ADB23FD4D1200B9BB47 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */; };
 		ED6E20E223FE547D00CCC881 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */; };
 		ED6E20E423FE63CB00CCC881 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E323FE63CB00CCC881 /* Validation.swift */; };
@@ -31,9 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		57F7CCED40B84DC99DDB8AE6 /* Pods_Zomato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zomato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACEDD8B45F99C232B3A146B8 /* Pods-Zomato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.release.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.release.xcconfig"; sourceTree = "<group>"; };
-		E535C6D14B24058634918D5F /* Pods-Zomato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.debug.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.debug.xcconfig"; sourceTree = "<group>"; };
+		3ECAA5D06C65259A84568FEA /* Pods_Zomato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zomato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5325D97388FD9C8F8ED3D63 /* Pods-Zomato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.release.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.release.xcconfig"; sourceTree = "<group>"; };
+		D9A4CBEEBE866241B83DB61E /* Pods-Zomato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.debug.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.debug.xcconfig"; sourceTree = "<group>"; };
 		ED0C90C623FBD0E9000FD8E8 /* Zomato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zomato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0C90C923FBD0E9000FD8E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED0C90CB23FBD0E9000FD8E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurentMenuTableViewCell.xib; sourceTree = "<group>"; };
 		ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentMenuModel.swift; sourceTree = "<group>"; };
 		ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentDetailTableViewController.swift; sourceTree = "<group>"; };
+		ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
 		ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED6E20E323FE63CB00CCC881 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -56,6 +58,8 @@
 		ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentModel.swift; sourceTree = "<group>"; };
 		ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ED99E5022403DD8D00123072 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		EDBE926F2403EFF5006AE587 /* libAlamofire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDBE92702403EFF5006AE587 /* libSwiftyJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSwiftyJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3582463A7FAA8126173BACD5 /* Pods_Zomato.framework in Frameworks */,
+				65A12FAE4770C6731E9257E1 /* Pods_Zomato.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +77,8 @@
 		343B81DEB459797BC78B7D67 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E535C6D14B24058634918D5F /* Pods-Zomato.debug.xcconfig */,
-				ACEDD8B45F99C232B3A146B8 /* Pods-Zomato.release.xcconfig */,
+				D9A4CBEEBE866241B83DB61E /* Pods-Zomato.debug.xcconfig */,
+				B5325D97388FD9C8F8ED3D63 /* Pods-Zomato.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -82,7 +86,9 @@
 		6B4CE169701801B6BB648DD3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				57F7CCED40B84DC99DDB8AE6 /* Pods_Zomato.framework */,
+				EDBE926F2403EFF5006AE587 /* libAlamofire.a */,
+				EDBE92702403EFF5006AE587 /* libSwiftyJSON.a */,
+				3ECAA5D06C65259A84568FEA /* Pods_Zomato.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,6 +127,7 @@
 			children = (
 				ED6E20E323FE63CB00CCC881 /* Validation.swift */,
 				ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */,
+				ED99E5022403DD8D00123072 /* Order.swift */,
 				ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */,
 			);
 			path = Model;
@@ -140,7 +147,7 @@
 				ED2B1AE523FFBCE700F766CD /* RestaurentDetailViewController.swift */,
 				ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */,
 				ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */,
-				ED99E5022403DD8D00123072 /* Order.swift */,
+				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -164,11 +171,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED0C90DA23FBD0EB000FD8E8 /* Build configuration list for PBXNativeTarget "Zomato" */;
 			buildPhases = (
-				41309981CC4358E63A6D7C76 /* [CP] Check Pods Manifest.lock */,
+				E9616255C9E403D276D72906 /* [CP] Check Pods Manifest.lock */,
 				ED0C90C223FBD0E9000FD8E8 /* Sources */,
 				ED0C90C323FBD0E9000FD8E8 /* Frameworks */,
 				ED0C90C423FBD0E9000FD8E8 /* Resources */,
-				F19BFBA384E6E75B93CB8C3A /* [CP] Embed Pods Frameworks */,
+				56A5FA7A2C625906C924C6E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,7 +235,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41309981CC4358E63A6D7C76 /* [CP] Check Pods Manifest.lock */ = {
+		56A5FA7A2C625906C924C6E2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9616255C9E403D276D72906 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -250,23 +274,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F19BFBA384E6E75B93CB8C3A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Zomato/Pods-Zomato-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -274,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED64929E2404EA500061F058 /* ForgotPasswordViewController.swift in Sources */,
 				ED6C5ADB23FD4D1200B9BB47 /* SegmentViewController.swift in Sources */,
 				ED3A5ABD23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift in Sources */,
 				ED6E20E823FEAF0000CCC881 /* RestaurantViewController.swift in Sources */,
@@ -430,7 +438,7 @@
 		};
 		ED0C90DB23FBD0EB000FD8E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E535C6D14B24058634918D5F /* Pods-Zomato.debug.xcconfig */;
+			baseConfigurationReference = D9A4CBEEBE866241B83DB61E /* Pods-Zomato.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -448,7 +456,7 @@
 		};
 		ED0C90DC23FBD0EB000FD8E8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACEDD8B45F99C232B3A146B8 /* Pods-Zomato.release.xcconfig */;
+			baseConfigurationReference = B5325D97388FD9C8F8ED3D63 /* Pods-Zomato.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

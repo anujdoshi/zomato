@@ -4,14 +4,6 @@
    <FileRef
       location = "group:Zomato.xcodeproj">
    </FileRef>
-   <Group
-      location = "group:Zomato/.."
-      name = "Products">
-      <FileRef
-         location = "build:Zomato.app"
-         assignedFileDataType = "com.apple.application-bundle">
-      </FileRef>
-   </Group>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>

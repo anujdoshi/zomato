@@ -102,6 +102,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                     loginEmail = self.emailTextField.text!
                     self.userDefaullt.set(true, forKey: "usersignedin")
                     self.userDefaullt.synchronize()
+                    self.userDefaullt.set(email, forKey: "usersignedinemail")
                     self.performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
                 }
             }
@@ -139,7 +140,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     }
     
     @IBAction func forgotPasswordButton(_ sender: UIButton) {
-        
+        performSegue(withIdentifier: "goToForgotPasssword", sender: self)
     }
     
     @IBAction func registerButton(_ sender: UIButton) {
