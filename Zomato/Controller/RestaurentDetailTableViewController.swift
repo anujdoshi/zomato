@@ -20,13 +20,20 @@ var uiView:UIView = UIView()
 let itemLabel = UILabel(frame: CGRect(x:3,y:10,width: 70,height: 30))
 let priceLabel = UILabel(frame: CGRect(x: 3, y: 30, width: 70, height: 30))
 let viewCart = UIButton(frame: CGRect(x: 100, y: 20, width: 80, height: 50))
-class RestaurentDetailTableViewController: UITableViewController {
+class RestaurentDetailTableViewController: UITableViewController,PassPrice {
+    func pass(price: Int, qty: Int) {
+        totalMainAmount = totalMainAmount + (price * qty)
+        priceLabel.text = "\(totalMainAmount)"
+    }
+    
    
     var foodMenuArray = [RestaurentMenuModel]()
     var foodOrder = [Cart]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let vc = RestaurentMenuTableViewCell()
+        vc.passdelegate = self
         
         tableView.register(UINib(nibName: "RestaurentMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         let uiview = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 70))
@@ -240,11 +247,10 @@ class RestaurentDetailTableViewController: UITableViewController {
     }
     
 }
-extension RestaurentDetailTableViewController:PassPrice{
-    func pass(price: Int, qty: Int) {
-        totalMainAmount = totalMainAmount + (price*qty)
+
+extension RestaurentDetailTableViewController:deleteprice{
+    func delete(price: Int) {
+        totalMainAmount = totalMainAmount + (price)
         priceLabel.text = "\(totalMainAmount)"
     }
-    
-    
 }

@@ -35,6 +35,8 @@ class RestaurentMenuTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        //passdelegate = PassPrice.self as! PassPrice
+            
         steeperOutlet.isHidden = true
         steeperOutlet.addTarget(self, action: #selector(self.valueChanged(stepper:)), for: .valueChanged)
     }
@@ -114,7 +116,9 @@ class RestaurentMenuTableViewCell: UITableViewCell {
                 self.order.foodId = id
                 self.order.qty = qty
                 self.order.amount = self.amount
+                print(qty,"=",self.amount)
                 self.passdelegate?.pass(price:self.amount,qty: qty)
+                self.deletedelegate?.delete(price: self.amount)
                 self.foodOrder.append(self.order)
                 //self.countAmount()
                 
