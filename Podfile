@@ -9,5 +9,6 @@ target 'Zomato' do
     pod 'SwiftyJSON'
     pod 'Alamofire'
     pod 'GeometricLoaders'
-    
+    pod 'GMStepper'
+    pod 'PureLayout'
 end

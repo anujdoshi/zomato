@@ -18,11 +18,13 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     
     //Button Outlet
     @IBOutlet weak var loginButtonOutlet: UIButton!
+    @IBOutlet var forgotPasswordButtonOutlet: UIButton!
     
     //Extra view outlet's
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     @IBOutlet weak var sliderCollectionView: UICollectionView!
     
+    @IBOutlet var containerView: UIView!
     var timer = Timer()
     var counter = 0
     var imgArr = [UIImage(named: "food"),UIImage(named: "food1"),UIImage(named: "food2"),UIImage(named: "food3"),UIImage(named: "food4"),UIImage(named: "food5")]
@@ -31,6 +33,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         super.viewDidLoad()
         updateUI()
         loginButtonOutlet.isUserInteractionEnabled = true
+        forgotPasswordButtonOutlet.isUserInteractionEnabled = true
         emailTextField.delegate = self
         passwordTextField.delegate = self
         // For Disable Keyboard when touch outside the view
@@ -51,9 +54,17 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         if userDefaullt.bool(forKey: "usersignedin"){
             performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
         }
+        //scrollViewOutlet.isExclusiveTouch = true
+        //scrollViewOutlet.delaysContentTouches = false
+        //forgotPasswordButtonOutlet.isExclusiveTouch = true
+        
         scrollViewOutlet.bounces = false
-        scrollViewOutlet.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
+        //scrollViewOutlet.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
+    
+        //containerView.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleWidth.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue)
+        //scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
         scrollViewOutlet.contentSize.width = 1.0
+
     }
     @objc func changeImage() {
     
@@ -73,7 +84,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     func getApi(){
         let email = emailTextField.text
         let password = passwordTextField.text
-        let url = URL(string: "http://192.168.2.226:3002/users/login")
+        let url = URL(string: "http://192.168.2.226:3005/users/login")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -94,9 +105,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                 return
             }
             let json = try! JSON(data: data)
-            //let responseString = String(data: data, encoding: .utf8)
-            print(json)
-            //print("responseString = \(json["message"])")
+            
             if json["message"] == "User Logged succesfully"{
                 DispatchQueue.main.async(){
                     loginEmail = self.emailTextField.text!
@@ -106,22 +115,27 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                     self.performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
                 }
             }
-            if json["message"] == "Incoorect password or Email" {
-                self.createAlert(message: "Incorect Email or Password Please Try Agian!!!")
-            }
-            if json["message"] == "Email does not exits"{
-                self.createAlert(message: "Please register first.Because this email \(email ?? "") is not saved in our database.")
+            else if json["message"] == "Incoorect password or Email" {
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Login", message:"Incorect Email or Password Please Try Agian!!!", preferredStyle:.alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 
+            }
+            else if json["message"] == "Email does not exits"{
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Login", message:"Please register first.Because this email \(email ?? "") is not saved in our database.", preferredStyle:.alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                
+                }
             }
         }
 
         task.resume()
-    }
-    func createAlert(message:String){
-        let alert = UIAlertController(title: "Login", message:message, preferredStyle:.alert)
-        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgArr.count

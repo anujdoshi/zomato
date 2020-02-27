@@ -34,7 +34,7 @@ class RestaurentDetailViewController: UIViewController {
     }
     
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3002/res/restaurents/resdetail")
+        let url = URL(string: "http://192.168.2.226:3005/res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

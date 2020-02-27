@@ -1,24 +1,32 @@
 PODS:
   - Alamofire (5.0.2)
   - GeometricLoaders (1.1.1)
+  - GMStepper (2.2)
+  - PureLayout (3.1.5)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - GeometricLoaders
+  - GMStepper
+  - PureLayout
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - GeometricLoaders
+    - GMStepper
+    - PureLayout
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
   GeometricLoaders: 4fbbeb569cf0ea647c620a9ffb87c9e63812e743
+  GMStepper: 89fb106944dfcc3aa3add7164e3ebd463ea2104b
+  PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 1294180d590716eea8e44b9c7b74e4165c81ae17
+PODFILE CHECKSUM: 893db2b0654ea875dd478b053de49eaad426b27d
 
 COCOAPODS: 1.8.4

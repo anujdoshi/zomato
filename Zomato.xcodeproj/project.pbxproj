@@ -19,6 +19,8 @@
 		ED3A5ABE23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */; };
 		ED3A5AC023FFE4E70038C882 /* RestaurentMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */; };
 		ED3A5AC223FFFFD00038C882 /* RestaurentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */; };
+		ED456DAE240791C9006443EE /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED456DAD240791C9006443EE /* Cart.swift */; };
+		ED456DB12407B1DE006443EE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED456DB02407B1DE006443EE /* Color.swift */; };
 		ED64929E2404EA500061F058 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */; };
 		ED6C5ADB23FD4D1200B9BB47 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */; };
 		ED6E20E223FE547D00CCC881 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */; };
@@ -48,6 +50,8 @@
 		ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurentMenuTableViewCell.xib; sourceTree = "<group>"; };
 		ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentMenuModel.swift; sourceTree = "<group>"; };
 		ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentDetailTableViewController.swift; sourceTree = "<group>"; };
+		ED456DAD240791C9006443EE /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
+		ED456DB02407B1DE006443EE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
 		ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 				ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */,
 				ED99E5022403DD8D00123072 /* Order.swift */,
 				ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */,
+				ED456DAD240791C9006443EE /* Cart.swift */,
+				ED456DB02407B1DE006443EE /* Color.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -136,18 +142,18 @@
 		ED2B1AE323FFB19A00F766CD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				ED456DAF2407A031006443EE /* Cell */,
 				ED0C90C923FBD0E9000FD8E8 /* AppDelegate.swift */,
 				ED0C90CB23FBD0E9000FD8E8 /* SceneDelegate.swift */,
 				ED0C90CD23FBD0E9000FD8E8 /* ViewController.swift */,
 				ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */,
 				ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */,
 				ED6E20E723FEAF0000CCC881 /* RestaurantViewController.swift */,
-				ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */,
-				ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */,
 				ED2B1AE523FFBCE700F766CD /* RestaurentDetailViewController.swift */,
 				ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */,
 				ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */,
 				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
+				ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -162,6 +168,14 @@
 				ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		ED456DAF2407A031006443EE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,10 +307,12 @@
 				ED6E20EB23FEB0A000CCC881 /* RestaurantTableViewCell.swift in Sources */,
 				ED3A5AC023FFE4E70038C882 /* RestaurentMenuModel.swift in Sources */,
 				ED0C90CA23FBD0E9000FD8E8 /* AppDelegate.swift in Sources */,
+				ED456DAE240791C9006443EE /* Cart.swift in Sources */,
 				ED6E20E423FE63CB00CCC881 /* Validation.swift in Sources */,
 				ED99E5032403DD8D00123072 /* Order.swift in Sources */,
 				ED6E20EE23FEB91D00CCC881 /* RestaurentModel.swift in Sources */,
 				ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */,
+				ED456DB12407B1DE006443EE /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
