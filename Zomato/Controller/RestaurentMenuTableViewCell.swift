@@ -10,44 +10,41 @@ import UIKit
 import SwiftyJSON
 import GMStepper
 import PureLayout
-protocol PassPrice {
-    func pass(price:Int,qty:Int)
-}
-protocol deleteprice {
-    func delete(price:Int)
-}
 
-class RestaurentMenuTableViewCell: UITableViewCell {
+class RestaurentMenuTableViewCell: UITableViewCell{
+    //Extra Variable
     var foodOrder = [Order]()
-    var totalArray = [Cart]()
     let order = Order()
+    let cart = Cart()
+    var oldValue:Int = 0
     var amount:Int = 0
-    var passdelegate:PassPrice?
-    var deletedelegate:deleteprice?
+    var count = 0
+    var stepperState:GMStepper.State?
+    //Configure a custom text label
     let texts = UILabel(frame: CGRect(x:270,y:80,width: 20,height: 20))
     
+    //Outlet's
     @IBOutlet var steeperOutlet: GMStepper!
     @IBOutlet var addButtonOutlet: UIButton!
     @IBOutlet var imageViewFood: UIImageView!
     @IBOutlet var foodAddButton: UIButton!
     @IBOutlet var foodPrice: UILabel!
     @IBOutlet var foodName: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //passdelegate = PassPrice.self as! PassPrice
-            
         steeperOutlet.isHidden = true
         steeperOutlet.addTarget(self, action: #selector(self.valueChanged(stepper:)), for: .valueChanged)
     }
+    
     func updateUI(){
         imageViewFood.layer.borderWidth = 1.0
         imageViewFood.layer.cornerRadius = 15.0
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func addButton(_ sender: UIButton) {
@@ -66,28 +63,18 @@ class RestaurentMenuTableViewCell: UITableViewCell {
             addButtonOutlet.isHidden = false
             steeperOutlet.isHidden = true
             //uiView.isHidden = true
-        }else{
-            
         }
-        
-        
+        if Int(stepper.value) > oldValue{
+            count = 1
+        }else{
+            count = 2
+        }
+        oldValue = Int(stepper.value)
         getFoodDetails(id: steeperOutlet.tag,qty: Int(stepper.value))
-        
-        
     }
-    func countAmount(){
-        print("Count:",foodOrder.count)
-//        totalMainAmount = 0
-//        for i in 0..<foodOrder.count{
-//            print(foodOrder[i].amount)
-//            print("Count:",foodOrder.count)
-//            totalMainAmount = totalMainAmount + (foodOrder[i].amount)
-//        }
-//        priceLabel.text = "\(totalMainAmount)"
-    }
+    
     func getFoodDetails(id:Int,qty:Int){
-        
-        let url = URL(string: "http://192.168.2.226:3005/food/fooddetails")
+        let url = URL(string: "http://192.168.2.226:3000/food/fooddetails")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -109,18 +96,23 @@ class RestaurentMenuTableViewCell: UITableViewCell {
             }
             let json = try! JSON(data: data)
             self.amount = json[0]["amount"].int!
-            //self.addToCart(id: id,qty: qty,amount:json[0]["amount"].int!)
+            
+            
             DispatchQueue.main.async(){
                 
-                
-                self.order.foodId = id
-                self.order.qty = qty
-                self.order.amount = self.amount
-                print(qty,"=",self.amount)
-                self.passdelegate?.pass(price:self.amount,qty: qty)
-                self.deletedelegate?.delete(price: self.amount)
-                self.foodOrder.append(self.order)
-                //self.countAmount()
+                self.addToCart(id: id,qty: qty,amount:json[0]["amount"].int!)
+                if self.count == 1{
+                    
+                    totalItem = totalItem + qty
+                    //itemLabel.text = "\(totalItem) | Items"
+                    totalMainAmount = totalMainAmount + (self.amount)
+                    priceLabel.text = "₹\(totalMainAmount)"
+                }else if self.count == 2{
+                    totalItem = totalItem - qty
+                    //itemLabel.text = "\(totalItem) | Items"
+                    totalMainAmount = totalMainAmount - (self.amount)
+                    priceLabel.text = "₹\(totalMainAmount)"
+                }
                 
             }
         }
@@ -130,7 +122,7 @@ class RestaurentMenuTableViewCell: UITableViewCell {
     }
     func addToCart(id:Int,qty:Int,amount:Int){
         
-        let url = URL(string: "http://192.168.2.226:3005/order/addtocart")
+        let url = URL(string: "http://192.168.2.226:3000/order/addtocart")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -152,7 +144,10 @@ class RestaurentMenuTableViewCell: UITableViewCell {
                 print("response = \(response)")
                 return
             }
-            
+            let js = try! JSON(data: data)
+            if js["message"] == "Order added to Cart"{
+                
+            }
         }
 
         task.resume()

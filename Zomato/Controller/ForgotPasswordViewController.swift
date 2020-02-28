@@ -51,7 +51,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     
     func verifyEmailApi(){
         let email = emailLabel.text
-        let url = URL(string: "http://192.168.2.226:3005/users/forgotpass")
+        let url = URL(string: "http://192.168.2.226:3000/users/forgotpass")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -98,7 +98,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     func changePasswordApi(){
         let email = emailLabel.text
         let password = passwordLabel.text
-        let url = URL(string: "http://192.168.2.226:3005/users/changepass")
+        let url = URL(string: "http://192.168.2.226:3000/users/changepass")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

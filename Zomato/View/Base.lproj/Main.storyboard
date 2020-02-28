@@ -445,7 +445,7 @@
                                             <constraint firstItem="tjI-I2-iGL" firstAttribute="top" secondItem="fVi-wd-tlu" secondAttribute="bottom" constant="56" id="bvc-ID-Ppw"/>
                                             <constraint firstItem="5yp-we-Zea" firstAttribute="top" secondItem="Z7Z-5g-89q" secondAttribute="bottom" constant="24" id="d9I-o7-14u"/>
                                             <constraint firstAttribute="trailing" secondItem="IYc-CF-qCx" secondAttribute="trailing" constant="8" id="eTR-aW-ID0"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z7Z-5g-89q" secondAttribute="trailing" symbolic="YES" id="ege-Ze-kIq"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z7Z-5g-89q" secondAttribute="trailing" constant="20" symbolic="YES" id="ege-Ze-kIq"/>
                                             <constraint firstItem="aIw-iE-EcS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tjI-I2-iGL" secondAttribute="trailing" constant="8" symbolic="YES" id="feB-8E-uP5"/>
                                             <constraint firstItem="aIw-iE-EcS" firstAttribute="top" secondItem="P9r-9O-yDl" secondAttribute="bottom" constant="58" id="fwq-CE-kMJ"/>
                                             <constraint firstItem="y0a-Bs-ZB7" firstAttribute="top" secondItem="FZc-Vv-xth" secondAttribute="top" constant="20" id="g2l-Mu-Ip3"/>

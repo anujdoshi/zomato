@@ -29,6 +29,8 @@
 		ED6E20EB23FEB0A000CCC881 /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */; };
 		ED6E20EC23FEB0A000CCC881 /* RestaurantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED6E20EA23FEB0A000CCC881 /* RestaurantTableViewCell.xib */; };
 		ED6E20EE23FEB91D00CCC881 /* RestaurentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */; };
+		ED75BB32240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */; };
+		ED75BB33240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */; };
 		ED99E4FF2403ADFE00123072 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */; };
 		ED99E5032403DD8D00123072 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99E5022403DD8D00123072 /* Order.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,8 @@
 		ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		ED6E20EA23FEB0A000CCC881 /* RestaurantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantTableViewCell.xib; sourceTree = "<group>"; };
 		ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentModel.swift; sourceTree = "<group>"; };
+		ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToCartDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ED99E5022403DD8D00123072 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		EDBE926F2403EFF5006AE587 /* libAlamofire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +158,8 @@
 				ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */,
 				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
 				ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */,
+				ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */,
+				ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 				ED6E20EC23FEB0A000CCC881 /* RestaurantTableViewCell.xib in Resources */,
 				ED3A5ABE23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib in Resources */,
 				ED0C90D623FBD0EB000FD8E8 /* LaunchScreen.storyboard in Resources */,
+				ED75BB33240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib in Resources */,
 				ED0C90D323FBD0EB000FD8E8 /* Assets.xcassets in Resources */,
 				ED0C90D123FBD0E9000FD8E8 /* Main.storyboard in Resources */,
 			);
@@ -301,6 +308,7 @@
 				ED6E20E823FEAF0000CCC881 /* RestaurantViewController.swift in Sources */,
 				ED6E20E223FE547D00CCC881 /* RegisterViewController.swift in Sources */,
 				ED99E4FF2403ADFE00123072 /* ProfileViewController.swift in Sources */,
+				ED75BB32240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift in Sources */,
 				ED0C90CE23FBD0E9000FD8E8 /* ViewController.swift in Sources */,
 				ED3A5AC223FFFFD00038C882 /* RestaurentDetailTableViewController.swift in Sources */,
 				ED2B1AE623FFBCE700F766CD /* RestaurentDetailViewController.swift in Sources */,

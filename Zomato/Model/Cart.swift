@@ -13,4 +13,5 @@ class Cart{
     var qty:Int = 0
     var amount:Int = 0
     var total_amount:Int = 0
+    var foodName:String = ""
 }

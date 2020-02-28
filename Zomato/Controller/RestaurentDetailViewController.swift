@@ -34,7 +34,7 @@ class RestaurentDetailViewController: UIViewController {
     }
     
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3005/res/restaurents/resdetail")
+        let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -55,7 +55,7 @@ class RestaurentDetailViewController: UIViewController {
                 return
             }
             let js = try! JSON(data: data)
-            //let responseString = String(data: data, encoding: .utf8)
+            
             DispatchQueue.main.async(){
                 let url = js[0]["photos"].string
                 let urlString = try! url?.asURL()

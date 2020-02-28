@@ -16,8 +16,6 @@ struct registerUser:Encodable{
     var mob_no:String = ""
     var address:String = ""
     var city:String = ""
-    
-    
 }
 class RegisterViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIScrollViewDelegate {
     var validation = Validation()
@@ -151,8 +149,8 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
         }
     }
     func validateTextField(){
-            guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text,
-                let phone = phoneNumberTextField.text else {
+        guard let email = emailTextField.text, let _ = passwordTextField.text, let name = nameTextField.text,
+            let _ = phoneNumberTextField.text else {
                     return
             }
             let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
@@ -195,72 +193,7 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
     func highlightTextField(textfield:UITextField,color:UIColor){
         textfield.layer.borderColor = color.cgColor
     }
-//    func getApi(){
-//        let email = emailTextField.text
-//        let username = nameTextField.text
-//        let phone = phoneNumberTextField.text
-//        let address = addressTextField.text
-//        let city = cityTextField.text
-//        let password = passwordTextField.text
-//        let url = URL(string: "http://192.168.2.226:3002/users/register")
-//        var request = URLRequest(url: url!)
-//        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//        request.httpMethod = "POST"
-//        let parameters: [String: Any] = ["email":email!,"password":password!,"username":username!,"mob_no":phone!,"city":city!,"address":address!]
-//        request.httpBody = parameters.percentEncoded()
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard let data = data,
-//                let response = response as? HTTPURLResponse,
-//                error == nil else {
-//                print("error", error ?? "Unknown error")
-//                return
-//            }
-//
-//            guard (200 ... 299) ~= response.statusCode else {
-//                print("statusCode should be 2xx, but is \(response.statusCode)")
-//                print("response = \(response)")
-//                return
-//            }
-//            let responseString = String(data: data, encoding: .utf8)
-//            let parsedData = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
-//            print(parsedData)
-//            if responseString == "Email Already Exists"{
-//                print("Hio")
-//            }
-//             let js = try! JSON(data: data)
-//            print(js)
-//            do{
-//                let js = try JSON(data: data)
-//                print(js)
-//                if js["message"] == "Success"{
-//                    DispatchQueue.main.async(){
-//                        self.performSegue(withIdentifier: "goToHomeFromRegister", sender: self)
-//                    }
-//                }else if js["message"] == "Email Already Exists"{
-//                    DispatchQueue.main.async(){
-//                        let alert = UIAlertController(title: "Register", message: "This email is already exists!", preferredStyle: .alert)
-//                        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-//                        alert.addAction(action)
-//                        self.present(alert, animated: true, completion: nil)
-//                    }
-//                }
-//                else{
-//                    DispatchQueue.main.async(){
-//                        let alert = UIAlertController(title: "Register", message: "Something is wrong. Try Again!!!", preferredStyle: .alert)
-//                        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-//                        alert.addAction(action)
-//                        self.present(alert, animated: true, completion: nil)
-//                    }
-//                }
-//            }catch{
-//                print("Error")
-//            }
-//
-//        }
-//
-//        task.resume()
-//    }
+
         func getApi(){
             let email = emailTextField.text
             let username = nameTextField.text
@@ -269,9 +202,8 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
             let city = cityTextField.text
             let password = passwordTextField.text
             let parameters: [String: String] = ["email":"\(email ?? "")","password":"\(password ?? "0")","username":"\(username ?? "0")","mob_no":"\(phone ?? "0")","city":"\(city ?? "0")","address":"\(address ?? "0")"]
-            let jsonUrl = "http://192.168.2.226:3005/users/register"
+            let jsonUrl = "http://192.168.2.226:3000/users/register"
             let url = URL(string: jsonUrl)
-            //let parameter = registerUser(userName: username!, email: email!, password: password!, mob_no: phone!, address: address!, city: city!)
             AF.request(url!,method:.post,parameters: parameters,encoder: URLEncodedFormParameterEncoder(destination: .httpBody)).responseJSON(completionHandler: { (response) in
                 switch response.result {
                 case .success:
@@ -304,6 +236,7 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
 
                     }
                 case .failure(let error):
+                    print(error)
                     DispatchQueue.main.async(){
                         let alert = UIAlertController(title: "Register", message: "Something is wrong. Try Again!!!", preferredStyle: .alert)
                         let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
@@ -334,26 +267,4 @@ extension RegisterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
-}
-extension Dictionary {
-    func percentEncodeds() -> Data? {
-        return map { key, value in
-            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
-            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
-            return escapedKey + "=" + escapedValue
-        }
-        .joined(separator: "&")
-        .data(using: .utf8)
-    }
-}
-
-extension CharacterSet {
-    static let urlQueryValueAlloweds: CharacterSet = {
-        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
-        let subDelimitersToEncode = "!$&'()*+,;="
-
-        var allowed = CharacterSet.urlQueryAllowed
-        allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
-        return allowed
-    }()
 }

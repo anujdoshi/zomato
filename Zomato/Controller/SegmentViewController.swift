@@ -54,15 +54,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         if userDefaullt.bool(forKey: "usersignedin"){
             performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
         }
-        //scrollViewOutlet.isExclusiveTouch = true
-        //scrollViewOutlet.delaysContentTouches = false
-        //forgotPasswordButtonOutlet.isExclusiveTouch = true
-        
         scrollViewOutlet.bounces = false
-        //scrollViewOutlet.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
-    
-        //containerView.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleWidth.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue)
-        //scrollViewOutlet.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
         scrollViewOutlet.contentSize.width = 1.0
 
     }
@@ -84,7 +76,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     func getApi(){
         let email = emailTextField.text
         let password = passwordTextField.text
-        let url = URL(string: "http://192.168.2.226:3005/users/login")
+        let url = URL(string: "http://192.168.2.226:3000/users/login")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

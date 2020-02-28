@@ -60,7 +60,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         cell.restaurantName.text = restaurentArray[indexPath.row].restauren_name
         //cell.restaurantPhoneNumber.text = restaurentArray[indexPath.row].phonenumber
         cell.restaurantType.text = restaurentArray[indexPath.row].restaurentType
-        cell.openingHours.text = restaurentArray[indexPath.row].openingHour
+        cell.openingHours.text = "⏰\(restaurentArray[indexPath.row].openingHour)"
         cell.restaurantImage.image = UIImage(data: data! as Data)
         return cell
     }
@@ -71,7 +71,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     }
     @objc func getApi(){
-        let jsonUrl = "http://192.168.2.226:3005/res/restaurents"
+        let jsonUrl = "http://192.168.2.226:3000/res/restaurents"
         let url = URL(string: jsonUrl)
         AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
             let json : JSON = JSON(response.value)
@@ -117,7 +117,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3005/res/restaurents/resdetail")
+        let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -175,7 +175,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         restaurentArray.removeAll()
         tableView.reloadData()
         
-        let url = URL(string: "http://192.168.2.226:3005/food/search")
+        let url = URL(string: "http://192.168.2.226:3000/food/search")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -195,10 +195,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 print("response = \(response)")
                 return
             }
-
-            //let responseString = String(data: data, encoding: .utf8)
             let js = try! JSON(data: data)
-            //let responseString = String(data: data, encoding: .utf8)
             DispatchQueue.main.async(){
                 self.getData(json: js)
             }

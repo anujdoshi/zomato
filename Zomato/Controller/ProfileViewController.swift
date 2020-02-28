@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     func getProfileApi(email:String){
-        let url = URL(string: "http://192.168.2.226:3005/users/profiledetails")
+        let url = URL(string: "http://192.168.2.226:3000/users/profiledetails")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
