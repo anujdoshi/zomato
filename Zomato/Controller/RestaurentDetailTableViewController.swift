@@ -182,23 +182,27 @@ class RestaurentDetailTableViewController: UITableViewController{
         foodOrder.removeAll()
         cartDetailApi(r_id: rid, email: loginEmail)
         
-//        let actionSheet = UIAlertController(title: "\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
-//
-//        let view = UIView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 120.0))
-//        myTableView = UITableView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 100))
-//        //myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
-//        myTableView.register(UINib(nibName: "AddToCartDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "MyCell")
-//        myTableView.dataSource = self
-//        myTableView.delegate = self
-//
-//        view.addSubview(myTableView)
-//        view.backgroundColor = UIColor.white
-//        actionSheet.view.addSubview(view)
-//
-//        actionSheet.addAction(UIAlertAction(title: "Place Order", style: .default, handler: nil))
-//        actionSheet.addAction(UIAlertAction(title: "Total Price\(totalMainAmount)", style: .default, handler: nil))
-//        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        present(actionSheet, animated: true, completion: nil)
+        let actionSheet = UIAlertController(title: "\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
+
+        let view = UIView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 120.0))
+        
+        DispatchQueue.main.async {
+            self.myTableView = UITableView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 100))
+            //myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+            self.myTableView.register(UINib(nibName: "AddToCartDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "MyCell")
+            self.myTableView.dataSource = self
+            self.myTableView.delegate = self
+            view.addSubview(self.myTableView)
+            view.backgroundColor = UIColor.white
+            actionSheet.view.addSubview(view)
+            actionSheet.addAction(UIAlertAction(title: "Place Order", style: .default, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: "Total Price\(totalMainAmount)", style: .default, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(actionSheet, animated: true, completion: nil)
+        }
+        
+
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         //
