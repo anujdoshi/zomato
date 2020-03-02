@@ -11,4 +11,5 @@ target 'Zomato' do
     pod 'GeometricLoaders'
     pod 'GMStepper'
     pod 'PureLayout'
+    pod 'SkeletonView'
 end

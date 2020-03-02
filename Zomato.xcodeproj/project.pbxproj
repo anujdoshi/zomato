@@ -14,6 +14,11 @@
 		ED0C90D123FBD0E9000FD8E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED0C90CF23FBD0E9000FD8E8 /* Main.storyboard */; };
 		ED0C90D323FBD0EB000FD8E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED0C90D223FBD0EB000FD8E8 /* Assets.xcassets */; };
 		ED0C90D623FBD0EB000FD8E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED0C90D423FBD0EB000FD8E8 /* LaunchScreen.storyboard */; };
+		ED0FD863240D0D8A00240BC6 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0FD861240D0D8A00240BC6 /* OrderTableViewCell.swift */; };
+		ED0FD864240D0D8A00240BC6 /* OrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED0FD862240D0D8A00240BC6 /* OrderTableViewCell.xib */; };
+		ED0FD866240D10AA00240BC6 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0FD865240D10AA00240BC6 /* OrderViewController.swift */; };
+		ED0FD86C240D2C4B00240BC6 /* SSRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0FD86A240D2C4B00240BC6 /* SSRadioButton.swift */; };
+		ED0FD86D240D2C4B00240BC6 /* SSRadioButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0FD86B240D2C4B00240BC6 /* SSRadioButtonsController.swift */; };
 		ED2B1AE623FFBCE700F766CD /* RestaurentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2B1AE523FFBCE700F766CD /* RestaurentDetailViewController.swift */; };
 		ED3A5ABD23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */; };
 		ED3A5ABE23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */; };
@@ -29,6 +34,7 @@
 		ED6E20EB23FEB0A000CCC881 /* RestaurantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */; };
 		ED6E20EC23FEB0A000CCC881 /* RestaurantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED6E20EA23FEB0A000CCC881 /* RestaurantTableViewCell.xib */; };
 		ED6E20EE23FEB91D00CCC881 /* RestaurentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */; };
+		ED75AA09240D313B00EC580A /* PlaceOrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */; };
 		ED75BB32240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */; };
 		ED75BB33240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */; };
 		ED99E4FF2403ADFE00123072 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */; };
@@ -47,6 +53,11 @@
 		ED0C90D223FBD0EB000FD8E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED0C90D523FBD0EB000FD8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED0C90D723FBD0EB000FD8E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED0FD861240D0D8A00240BC6 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		ED0FD862240D0D8A00240BC6 /* OrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderTableViewCell.xib; sourceTree = "<group>"; };
+		ED0FD865240D10AA00240BC6 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		ED0FD86A240D2C4B00240BC6 /* SSRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButton.swift; sourceTree = "<group>"; };
+		ED0FD86B240D2C4B00240BC6 /* SSRadioButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButtonsController.swift; sourceTree = "<group>"; };
 		ED2B1AE523FFBCE700F766CD /* RestaurentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentDetailViewController.swift; sourceTree = "<group>"; };
 		ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentMenuTableViewCell.swift; sourceTree = "<group>"; };
 		ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurentMenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -62,6 +73,7 @@
 		ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewCell.swift; sourceTree = "<group>"; };
 		ED6E20EA23FEB0A000CCC881 /* RestaurantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantTableViewCell.xib; sourceTree = "<group>"; };
 		ED6E20ED23FEB91D00CCC881 /* RestaurentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurentModel.swift; sourceTree = "<group>"; };
+		ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOrderDetailsViewController.swift; sourceTree = "<group>"; };
 		ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToCartDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -122,12 +134,22 @@
 		ED0C90C823FBD0E9000FD8E8 /* Zomato */ = {
 			isa = PBXGroup;
 			children = (
+				ED0FD869240D2C3A00240BC6 /* Radio Button Controller */,
 				ED2B1AE423FFB1A300F766CD /* View */,
 				ED2B1AE323FFB19A00F766CD /* Controller */,
 				ED2B1AE223FFB19200F766CD /* Model */,
 				ED0C90D723FBD0EB000FD8E8 /* Info.plist */,
 			);
 			path = Zomato;
+			sourceTree = "<group>";
+		};
+		ED0FD869240D2C3A00240BC6 /* Radio Button Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ED0FD86A240D2C4B00240BC6 /* SSRadioButton.swift */,
+				ED0FD86B240D2C4B00240BC6 /* SSRadioButtonsController.swift */,
+			);
+			path = "Radio Button Controller";
 			sourceTree = "<group>";
 		};
 		ED2B1AE223FFB19200F766CD /* Model */ = {
@@ -156,10 +178,10 @@
 				ED2B1AE523FFBCE700F766CD /* RestaurentDetailViewController.swift */,
 				ED3A5AC123FFFFD00038C882 /* RestaurentDetailTableViewController.swift */,
 				ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */,
-				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
 				ED3A5ABB23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift */,
-				ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */,
-				ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */,
+				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
+				ED0FD865240D10AA00240BC6 /* OrderViewController.swift */,
+				ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -169,9 +191,11 @@
 			children = (
 				ED0C90CF23FBD0E9000FD8E8 /* Main.storyboard */,
 				ED6E20EA23FEB0A000CCC881 /* RestaurantTableViewCell.xib */,
+				ED0FD862240D0D8A00240BC6 /* OrderTableViewCell.xib */,
 				ED0C90D223FBD0EB000FD8E8 /* Assets.xcassets */,
 				ED0C90D423FBD0EB000FD8E8 /* LaunchScreen.storyboard */,
 				ED3A5ABC23FFE4CB0038C882 /* RestaurentMenuTableViewCell.xib */,
+				ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +204,8 @@
 			isa = PBXGroup;
 			children = (
 				ED6E20E923FEB0A000CCC881 /* RestaurantTableViewCell.swift */,
+				ED0FD861240D0D8A00240BC6 /* OrderTableViewCell.swift */,
+				ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -249,6 +275,7 @@
 				ED0C90D623FBD0EB000FD8E8 /* LaunchScreen.storyboard in Resources */,
 				ED75BB33240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib in Resources */,
 				ED0C90D323FBD0EB000FD8E8 /* Assets.xcassets in Resources */,
+				ED0FD864240D0D8A00240BC6 /* OrderTableViewCell.xib in Resources */,
 				ED0C90D123FBD0E9000FD8E8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,10 +331,13 @@
 			files = (
 				ED64929E2404EA500061F058 /* ForgotPasswordViewController.swift in Sources */,
 				ED6C5ADB23FD4D1200B9BB47 /* SegmentViewController.swift in Sources */,
+				ED0FD86D240D2C4B00240BC6 /* SSRadioButtonsController.swift in Sources */,
 				ED3A5ABD23FFE4CB0038C882 /* RestaurentMenuTableViewCell.swift in Sources */,
 				ED6E20E823FEAF0000CCC881 /* RestaurantViewController.swift in Sources */,
 				ED6E20E223FE547D00CCC881 /* RegisterViewController.swift in Sources */,
+				ED0FD86C240D2C4B00240BC6 /* SSRadioButton.swift in Sources */,
 				ED99E4FF2403ADFE00123072 /* ProfileViewController.swift in Sources */,
+				ED0FD863240D0D8A00240BC6 /* OrderTableViewCell.swift in Sources */,
 				ED75BB32240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift in Sources */,
 				ED0C90CE23FBD0E9000FD8E8 /* ViewController.swift in Sources */,
 				ED3A5AC223FFFFD00038C882 /* RestaurentDetailTableViewController.swift in Sources */,
@@ -318,8 +348,10 @@
 				ED456DAE240791C9006443EE /* Cart.swift in Sources */,
 				ED6E20E423FE63CB00CCC881 /* Validation.swift in Sources */,
 				ED99E5032403DD8D00123072 /* Order.swift in Sources */,
+				ED0FD866240D10AA00240BC6 /* OrderViewController.swift in Sources */,
 				ED6E20EE23FEB91D00CCC881 /* RestaurentModel.swift in Sources */,
 				ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */,
+				ED75AA09240D313B00EC580A /* PlaceOrderDetailsViewController.swift in Sources */,
 				ED456DB12407B1DE006443EE /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

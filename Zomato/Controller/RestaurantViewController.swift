@@ -10,15 +10,18 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import GeometricLoaders
+import SkeletonView
 var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
 var VW_overlay: UIView = UIView()
 var rid:Int = 0
+
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     var container: CircleLoader?
     @IBOutlet var searchBar: UISearchBar!
-    var restaurentArray = [RestaurentModel]()
+    
     var timer = Timer()
     var restaurentId : Int = 0
+    var restaurentArray = [RestaurentModel]()
     
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
@@ -29,6 +32,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         loadingActivity()
+    }
+    override func viewDidLayoutSubviews() {
+        view.layoutSkeletonIfNeeded()
     }
     func loadingActivity(){
             VW_overlay = UIView(frame: UIScreen.main.bounds)
@@ -74,7 +80,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         let jsonUrl = "http://192.168.2.226:3000/res/restaurents"
         let url = URL(string: jsonUrl)
         AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
-            let json : JSON = JSON(response.value)
+            let json : JSON = JSON(response.value!)
             for i in 0..<json.count{
                 let id = json[i]["r_id"]
                 let name = json[i]["restaurant_name"]

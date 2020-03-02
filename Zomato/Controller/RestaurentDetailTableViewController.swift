@@ -16,6 +16,7 @@ struct addToCart:Encodable {
 }
 var totalMainAmount = 0
 var totalItem = 0
+
 var uiView:UIView = UIView()
 let itemLabel = UILabel(frame: CGRect(x:3,y:10,width: 100,height: 30))
 let priceLabel = UILabel(frame: CGRect(x: 3, y: 30, width: 90, height: 30))
@@ -23,15 +24,19 @@ let viewCart = UIButton()
 
 class RestaurentDetailTableViewController: UITableViewController{
     var myTableView: UITableView!
-    
-    
-    var foodMenuArray = [RestaurentMenuModel]()
     var foodOrder = [Cart]()
+    var foodMenuArray = [RestaurentMenuModel]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //For Register a custom cell
         tableView.register(UINib(nibName: "RestaurentMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-        
+        //For Updating UI
+        updateUI()
+    }
+    
+    func updateUI(){
         let uiview = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 70))
         viewCart.frame = CGRect(x: view.bounds.maxX-200, y: 0, width: 200, height: 100)
         uiview.backgroundColor = Color.red
@@ -54,15 +59,13 @@ class RestaurentDetailTableViewController: UITableViewController{
         uiview.isHidden = true
         uiView = uiview
         getRestaurentDetailApi(id: restaurentId)
-        
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == myTableView{
             return foodOrder.count
         }
-        
         return foodMenuArray.count
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,8 +75,6 @@ class RestaurentDetailTableViewController: UITableViewController{
             cell.foodName.text = "\(foodOrder[indexPath.row].foodName)"
             cell.qtyLabel.text = "\(foodOrder[indexPath.row].qty)"
             cell.priceLabel.text = "\(foodOrder[indexPath.row].amount)"
-            //cell.detailTextLabel?.text = "Qty:-\(foodOrder[indexPath.row].qty)"
-            //cell.textLabel?.text = "Price:-\(foodOrder[indexPath.row].amount)"
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurentMenuTableViewCell
@@ -91,6 +92,14 @@ class RestaurentDetailTableViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        totalMainAmount = 0
+        foodOrder.removeAll()
+        deletCartDetails()
+    }
+    
+    //Api Call's
     func getRestaurentDetailApi(id:Int){
         let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
         var request = URLRequest(url: url!)
@@ -185,30 +194,33 @@ class RestaurentDetailTableViewController: UITableViewController{
         let actionSheet = UIAlertController(title: "\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
 
         let view = UIView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 120.0))
-        
         DispatchQueue.main.async {
-            self.myTableView = UITableView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 100))
-            //myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+            
+            self.myTableView = UITableView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 300))
             self.myTableView.register(UINib(nibName: "AddToCartDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "MyCell")
             self.myTableView.dataSource = self
             self.myTableView.delegate = self
             view.addSubview(self.myTableView)
             view.backgroundColor = UIColor.white
             actionSheet.view.addSubview(view)
-            actionSheet.addAction(UIAlertAction(title: "Place Order", style: .default, handler: nil))
+
+            actionSheet.addAction(UIAlertAction(title: "Place Order", style: .default, handler: { (UIAlertAction) in
+                //
+                for i in 0..<self.foodOrder.count{
+                    let f_id = self.foodOrder[i].foodId
+                    let qty = self.foodOrder[i].qty
+                    self.placeOrder(f_id: f_id, qty: qty)
+
+                }
+            }))
+            let height:NSLayoutConstraint = NSLayoutConstraint(item: actionSheet.view, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.80)
+            actionSheet.view.addConstraint(height);
             actionSheet.addAction(UIAlertAction(title: "Total Price\(totalMainAmount)", style: .default, handler: nil))
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(actionSheet, animated: true, completion: nil)
         }
-        
-
-        
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        //
-        totalMainAmount = 0
-        deletCartDetails()
-    }
+    
     func deletCartDetails(){
         let url = URL(string: "http://192.168.2.226:3000/order/delcartdetails")
         var request = URLRequest(url: url!)
@@ -268,13 +280,62 @@ class RestaurentDetailTableViewController: UITableViewController{
                     self.foodOrder[i].foodName = json[0]["food_name"].string!
                     self.myTableView.reloadData()
                 }
+                
             }
-           
+            
            }
+            
        }
        
        task.resume()
        
    }
-    
+   func placeOrder(f_id:Int,qty:Int){
+        let url = URL(string: "http://192.168.2.226:3000/orderlist/addtoorderlist")
+        var request = URLRequest(url: url!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        let parameters: [String: Any] = ["r_id":rid,"f_id":f_id,"email":loginEmail,"qty":qty,"address":"","payment_type":"Cash","total_amount":totalMainAmount]
+        request.httpBody = parameters.percentEncoded()
+            
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data,
+            let response = response as? HTTPURLResponse,
+                error == nil else {
+                print("error", error ?? "Unknown error")
+                return
+            }
+
+            guard (200 ... 299) ~= response.statusCode else {
+                print("statusCode should be 2xx, but is \(response.statusCode)")
+                print("response = \(response)")
+                return
+            }
+            let json = try! JSON(data: data)
+           
+            
+            
+            DispatchQueue.main.async(){
+             
+                if json["message"] == "Order added to Order List"{
+                    let alert = UIAlertController(title: "Place Order", message: "Your Order successfully placed.Our Caption sortly order your food at your place. Thank You for chossing us", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .default, handler:nil)
+                    let cancelOrder = UIAlertAction(title: "Cancel Order", style: .cancel) { (UIAlertAction) in
+                        //
+                    }
+                    alert.addAction(action)
+                    alert.addAction(cancelOrder)
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else{
+                    let alert = UIAlertController(title: "Place Order", message: "Something went wrong please try again!!!", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        
+        task.resume()
+    }
 }
