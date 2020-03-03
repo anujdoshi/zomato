@@ -18,6 +18,7 @@ class OrderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        foodOrderDetails.isEditable = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

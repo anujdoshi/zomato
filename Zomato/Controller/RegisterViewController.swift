@@ -9,15 +9,10 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
-struct registerUser:Encodable{
-    var userName:String = ""
-    var email:String = ""
-    var password:String = ""
-    var mob_no:String = ""
-    var address:String = ""
-    var city:String = ""
-}
+
 class RegisterViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIScrollViewDelegate {
+    
+    // Ectra Variable
     var validation = Validation()
     let userDefaullt = UserDefaults.standard
     var timer = Timer()
@@ -43,13 +38,9 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         registerButtonOutlet.isUserInteractionEnabled = true
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        nameTextField.delegate = self
-        addressTextField.delegate = self
-        phoneNumberTextField.delegate = self
-        cityTextField.delegate = self
         
+        //For textfield delegate
+        textFieldDelegate()
         scrollViewOutlet.delegate = self
         //For update TextfieldUI
         updateTextFieldUI()
@@ -64,10 +55,24 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
         }
         
     }
+    /*
+    // MARK: - Text Field Delegate
+    */
+    func textFieldDelegate(){
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        nameTextField.delegate = self
+        addressTextField.delegate = self
+        phoneNumberTextField.delegate = self
+        cityTextField.delegate = self
+    }
     override func viewDidAppear(_ animated: Bool) {
         scrollViewOutlet.bounces = false
         scrollViewOutlet.contentSize.width = 1.0
     }
+    /*
+    // MARK: - For Dismiss a keyboard
+    */
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         nameTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
@@ -76,7 +81,9 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
         addressTextField.resignFirstResponder()
         emailTextField.resignFirstResponder()
     }
-    
+    /*
+    // MARK: - Update Textfield UI Function
+    */
     func updateTextFieldUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
         emailTextField.layer.cornerRadius = 15.0
@@ -126,6 +133,9 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
         }
         
     }
+    /*
+    // MARK: - Collection View Method
+    */
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgArr.count
     }
@@ -137,17 +147,28 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
         }
         return cell
     }
-    
+    /*
+    // MARK: - Register Button Pressed
+    */
     @IBAction func registerButtonPress(_ sender: UIButton) {
         if validate == true{
             getApi()
         }else{
-            let alert = UIAlertController(title: "Register", message: "Please Provide all details correctly", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            createAlert(message: "Please Provide all details correctly", buttonTitle: "Ok")
         }
     }
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Register", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    /*
+    // MARK: - Validation Function
+    */
     func validateTextField(){
         guard let email = emailTextField.text, let _ = passwordTextField.text, let name = nameTextField.text,
             let _ = phoneNumberTextField.text else {
@@ -193,30 +214,28 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
     func highlightTextField(textfield:UITextField,color:UIColor){
         textfield.layer.borderColor = color.cgColor
     }
-
-        func getApi(){
-            let email = emailTextField.text
-            let username = nameTextField.text
-            let phone = phoneNumberTextField.text
-            let address = addressTextField.text
-            let city = cityTextField.text
-            let password = passwordTextField.text
-            let parameters: [String: String] = ["email":"\(email ?? "")","password":"\(password ?? "0")","username":"\(username ?? "0")","mob_no":"\(phone ?? "0")","city":"\(city ?? "0")","address":"\(address ?? "0")"]
-            let jsonUrl = "http://192.168.2.226:3000/users/register"
-            let url = URL(string: jsonUrl)
-            AF.request(url!,method:.post,parameters: parameters,encoder: URLEncodedFormParameterEncoder(destination: .httpBody)).responseJSON(completionHandler: { (response) in
-                switch response.result {
+    /*
+    // MARK: - Get Api Function
+    */
+    func getApi(){
+        let email = emailTextField.text
+        let username = nameTextField.text
+        let phone = phoneNumberTextField.text
+        let address = addressTextField.text
+        let city = cityTextField.text
+        let password = passwordTextField.text
+        let parameters: [String: String] = ["email":"\(email ?? "")","password":"\(password ?? "0")","username":"\(username ?? "0")","mob_no":"\(phone ?? "0")","city":"\(city ?? "0")","address":"\(address ?? "0")"]
+        let jsonUrl = "\(urlAPILocation)users/register"
+        let url = URL(string: jsonUrl)
+        AF.request(url!,method:.post,parameters: parameters,encoder: URLEncodedFormParameterEncoder(destination: .httpBody)).responseJSON(completionHandler: { (response) in
+            switch response.result {
                 case .success:
-                    
                     if let json = response.data {
                         do{
                             let data = try JSON(data: json)
                             if data["message"] == "Email Alreay Exists"{
                                 DispatchQueue.main.async(){
-                                    let alert = UIAlertController(title: "Register", message: "This email is already exists!", preferredStyle: .alert)
-                                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                                    alert.addAction(action)
-                                    self.present(alert, animated: true, completion: nil)
+                                    self.createAlert(message: "This email is already exists!", buttonTitle: "Ok")
                                 }
                             }else if data["message"] == "Success!"{
                                 DispatchQueue.main.async(){
@@ -242,12 +261,11 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
                         let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                         alert.addAction(action)
                         self.present(alert, animated: true, completion: nil)
+                        self.createAlert(message: "Something is wrong. Try Again!!!", buttonTitle: "Ok")
                     }
-                }
-    
-    
-            })
-        }
+            }
+        })
+    }
 }
 extension RegisterViewController: UICollectionViewDelegateFlowLayout {
     

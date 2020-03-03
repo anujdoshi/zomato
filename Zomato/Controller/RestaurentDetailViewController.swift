@@ -10,31 +10,59 @@ import UIKit
 import SwiftyJSON
 var restaurentId:Int = 0
 class RestaurentDetailViewController: UIViewController {
-    
+    //Extra Variable
     var id :Int = 0
     var foodMenuArray = [RestaurentMenuModel]()
+    //Outlet
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var restaurentPhoneNumber: UILabel!
     @IBOutlet var restaurentHours: UILabel!
     @IBOutlet var restaurentName: UILabel!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var restaurentAddress: UILabel!
-    
     @IBOutlet var restaurentDetails: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         restaurentId = id
-        getRestaurentDetailApi(id: rid)
+        loadingActivity()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         scrollView.bounces = false
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
         scrollView.contentSize.width = 1.0
     }
-    
+    /*
+    // MARK: - Loader Implementation Function
+    */
+    func loadingActivity(){
+            VW_overlay = UIView(frame: UIScreen.main.bounds)
+            VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+
+            activityIndicatorView = UIActivityIndicatorView(style: .large)
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
+            activityIndicatorView.color = UIColor.red
+            activityIndicatorView.center = VW_overlay.center
+
+            
+            VW_overlay.addSubview(activityIndicatorView)
+            VW_overlay.center = view.center
+        
+            view.addSubview(VW_overlay)
+            activityIndicatorView.startAnimating()
+            perform(#selector(self.getRestaurentDetail), with: activityIndicatorView, afterDelay: 0.01)
+
+    }
+    @objc func getRestaurentDetail(){
+            getRestaurentDetailApi(id: rid)
+    }
+    /*
+    // MARK: - API (Restaurent Detail)
+    */
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
+        let url = URL(string: "\(urlAPILocation)res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

@@ -14,11 +14,12 @@ import SkeletonView
 var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
 var VW_overlay: UIView = UIView()
 var rid:Int = 0
-
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     var container: CircleLoader?
-    @IBOutlet var searchBar: UISearchBar!
     
+    //Searchbar outlet
+    @IBOutlet var searchBar: UISearchBar!
+   
     var timer = Timer()
     var restaurentId : Int = 0
     var restaurentArray = [RestaurentModel]()
@@ -36,6 +37,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLayoutSubviews() {
         view.layoutSkeletonIfNeeded()
     }
+    /*
+    // MARK: - Loader Implementation Function
+    */
     func loadingActivity(){
             VW_overlay = UIView(frame: UIScreen.main.bounds)
             VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -54,6 +58,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
             perform(#selector(self.getApi), with: activityIndicatorView, afterDelay: 0.01)
 
     }
+    /*
+    // MARK: - Table View Methods
+    */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restaurentArray.count
     }
@@ -76,8 +83,11 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         getRestaurentDetailApi(id:restaurentId)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    /*
+    // MARK: - API Function
+    */
     @objc func getApi(){
-        let jsonUrl = "http://192.168.2.226:3000/res/restaurents"
+        let jsonUrl = "\(urlAPILocation)res/restaurents"
         let url = URL(string: jsonUrl)
         AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
             let json : JSON = JSON(response.value!)
@@ -123,7 +133,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
+        let url = URL(string: "\(urlAPILocation)res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -158,6 +168,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
 
         task.resume()
     }
+    /*
+    // MARK: - Prepare Segue
+    */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let barVC = segue.destination as? UITabBarController {
@@ -169,7 +182,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         }
         
     }
-    
+    /*
+    // MARK: - Search Bar Delegate Method (textDidChange)
+    */
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //
         if (searchBar.text?.count)! > 2 {
@@ -177,11 +192,14 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         }
         
     }
+    /*
+    // MARK: - Search API (Restaurent Detail)
+    */
     func getSearchRestaurentDetailApi(food_name:String){
         restaurentArray.removeAll()
         tableView.reloadData()
         
-        let url = URL(string: "http://192.168.2.226:3000/food/search")
+        let url = URL(string: "\(urlAPILocation)food/search")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -209,6 +227,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
 
         task.resume()
     }
+    /*
+    // MARK: - Search Bar Cancel Button Clicked
+    */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         restaurentArray.removeAll()

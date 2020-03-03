@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33AEE3509C4C10CA26F8A791 /* Pods_Zomato.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D3BA63F622666D8E75024F /* Pods_Zomato.framework */; };
+		ED02816B240E6793009A3985 /* UserOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02816A240E6793009A3985 /* UserOrder.swift */; };
 		ED0C90CA23FBD0E9000FD8E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90C923FBD0E9000FD8E8 /* AppDelegate.swift */; };
 		ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90CB23FBD0E9000FD8E8 /* SceneDelegate.swift */; };
 		ED0C90CE23FBD0E9000FD8E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0C90CD23FBD0E9000FD8E8 /* ViewController.swift */; };
@@ -45,6 +46,7 @@
 		02A3EBAA60FEED91BB05D379 /* Pods-Zomato.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.release.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.release.xcconfig"; sourceTree = "<group>"; };
 		7006276492931A96EE857C42 /* Pods-Zomato.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zomato.debug.xcconfig"; path = "Target Support Files/Pods-Zomato/Pods-Zomato.debug.xcconfig"; sourceTree = "<group>"; };
 		A2D3BA63F622666D8E75024F /* Pods_Zomato.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zomato.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED02816A240E6793009A3985 /* UserOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrder.swift; sourceTree = "<group>"; };
 		ED0C90C623FBD0E9000FD8E8 /* Zomato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zomato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0C90C923FBD0E9000FD8E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED0C90CB23FBD0E9000FD8E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				ED3A5ABF23FFE4E70038C882 /* RestaurentMenuModel.swift */,
 				ED456DAD240791C9006443EE /* Cart.swift */,
 				ED456DB02407B1DE006443EE /* Color.swift */,
+				ED02816A240E6793009A3985 /* UserOrder.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */,
 				ED75AA09240D313B00EC580A /* PlaceOrderDetailsViewController.swift in Sources */,
 				ED456DB12407B1DE006443EE /* Color.swift in Sources */,
+				ED02816B240E6793009A3985 /* UserOrder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,33 +9,47 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-
+let urlAPILocation = "http://192.168.2.226:3000/"
 class SegmentViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate{
-    //TextField Outlet's
-    let userDefaullt = UserDefaults.standard
+    /*
+    // MARK: - TextField's Outlet
+    */
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
-    //Button Outlet
+    /*
+    // MARK: - Button's Outlet
+    */
     @IBOutlet weak var loginButtonOutlet: UIButton!
     @IBOutlet var forgotPasswordButtonOutlet: UIButton!
     
-    //Extra view outlet's
+    /*
+    // MARK: - View's Outlet
+    */
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     @IBOutlet weak var sliderCollectionView: UICollectionView!
-    
     @IBOutlet var containerView: UIView!
+    /*
+    // MARK: - Extra Variable
+    */
+    let userDefaullt = UserDefaults.standard
     var timer = Timer()
     var counter = 0
     var imgArr = [UIImage(named: "food"),UIImage(named: "food1"),UIImage(named: "food2"),UIImage(named: "food3"),UIImage(named: "food4"),UIImage(named: "food5")]
-
+    /*
+    // MARK: - View's Override Function
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
+        //This Function will update UI
         updateUI()
+        
         loginButtonOutlet.isUserInteractionEnabled = true
         forgotPasswordButtonOutlet.isUserInteractionEnabled = true
+        //Textfield Delegate method is used
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        
         // For Disable Keyboard when touch outside the view
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -46,6 +60,9 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         }
 
     }
+    /*
+    // MARK: - For Dismiss Keyboard
+    */
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
@@ -56,7 +73,6 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         }
         scrollViewOutlet.bounces = false
         scrollViewOutlet.contentSize.width = 1.0
-
     }
     @objc func changeImage() {
     
@@ -73,16 +89,18 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         }
         
     }
+    /*
+    // MARK: - Get API
+    */
     func getApi(){
         let email = emailTextField.text
         let password = passwordTextField.text
-        let url = URL(string: "http://192.168.2.226:3000/users/login")
+        let url = URL(string: "\(urlAPILocation)users/login")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         let parameters: [String: Any] = ["email":email!,"password":password!]
         request.httpBody = parameters.percentEncoded()
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data,
                 let response = response as? HTTPURLResponse,
@@ -109,26 +127,23 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
             }
             else if json["message"] == "Incoorect password or Email" {
                 DispatchQueue.main.async(){
-                    let alert = UIAlertController(title: "Login", message:"Incorect Email or Password Please Try Agian!!!", preferredStyle:.alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
+                    self.createAlert(message: "Incorect Email or Password Please Try Agian!!!", buttonTitle: "Ok")
+                    
                 }
                 
             }
             else if json["message"] == "Email does not exits"{
                 DispatchQueue.main.async(){
-                    let alert = UIAlertController(title: "Login", message:"Please register first.Because this email \(email ?? "") is not saved in our database.", preferredStyle:.alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
-                
+                    self.createAlert(message: "Please register first.Because this email \(email ?? "") is not saved in our database.", buttonTitle: "Ok")
                 }
             }
         }
 
         task.resume()
     }
+    /*
+    // MARK: - Collection View methods
+    */
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgArr.count
     }
@@ -140,18 +155,45 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
         }
         return cell
     }
-    
+    /*
+    // MARK: - Login Button Action
+    */
     @IBAction func loginButtonPress(_ sender: UIButton) {
-       getApi()
+        if emailTextField.text == ""{
+            
+            createAlert(message: "Email can't be empty", buttonTitle: "Ok")
+            
+        }else if passwordTextField.text == ""{
+            createAlert(message: "Password can't be empty", buttonTitle: "Ok")
+        }else{
+            getApi()
+        }
+       
     }
-    
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    /*
+    // MARK: - Forgot Password Button Action
+    */
     @IBAction func forgotPasswordButton(_ sender: UIButton) {
         performSegue(withIdentifier: "goToForgotPasssword", sender: self)
     }
-    
+    /*
+    // MARK: - Register Button Action
+    */
     @IBAction func registerButton(_ sender: UIButton) {
         
     }
+    /*
+    // MARK: - Update UI Function
+    */
     func updateUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
         
@@ -209,3 +251,4 @@ extension CharacterSet {
         return allowed
     }()
 }
+

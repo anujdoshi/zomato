@@ -16,26 +16,38 @@ struct addToCart:Encodable {
 }
 var totalMainAmount = 0
 var totalItem = 0
-
+//Configure a custom view
 var uiView:UIView = UIView()
 let itemLabel = UILabel(frame: CGRect(x:3,y:10,width: 100,height: 30))
 let priceLabel = UILabel(frame: CGRect(x: 3, y: 30, width: 90, height: 30))
 let viewCart = UIButton()
 
 class RestaurentDetailTableViewController: UITableViewController{
+    // Variable
     var myTableView: UITableView!
     var foodOrder = [Cart]()
     var foodMenuArray = [RestaurentMenuModel]()
     
-    
+    /*
+    // MARK: - View Override Function
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         //For Register a custom cell
         tableView.register(UINib(nibName: "RestaurentMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         //For Updating UI
         updateUI()
+        loadingActivity()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        totalMainAmount = 0
+        foodOrder.removeAll()
+        deletCartDetails(rid: rid, loginEmail: loginEmail)
+    }
+    /*
+    // MARK: - Update UI
+    */
     func updateUI(){
         let uiview = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 70))
         viewCart.frame = CGRect(x: view.bounds.maxX-200, y: 0, width: 200, height: 100)
@@ -58,9 +70,36 @@ class RestaurentDetailTableViewController: UITableViewController{
         viewCart.addTarget(self, action: #selector(self.viewCartButton), for: .touchUpInside)
         uiview.isHidden = true
         uiView = uiview
-        getRestaurentDetailApi(id: restaurentId)
+        //getRestaurentDetailApi(id: restaurentId)
     }
-    
+    /*
+    // MARK: - Loader Implementation Function
+    */
+    func loadingActivity(){
+            VW_overlay = UIView(frame: UIScreen.main.bounds)
+            VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+
+            activityIndicatorView = UIActivityIndicatorView(style: .large)
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
+            activityIndicatorView.color = UIColor.red
+            activityIndicatorView.center = VW_overlay.center
+
+            
+            VW_overlay.addSubview(activityIndicatorView)
+            VW_overlay.center = view.center
+        
+            view.addSubview(VW_overlay)
+            activityIndicatorView.startAnimating()
+            perform(#selector(self.getRestaurentDetail), with: activityIndicatorView, afterDelay: 0.01)
+
+    }
+    @objc func getRestaurentDetail(){
+            getRestaurentDetailApi(id: restaurentId)
+            
+    }
+    /*
+    // MARK: - Tableview Method
+    */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == myTableView{
             return foodOrder.count
@@ -92,16 +131,22 @@ class RestaurentDetailTableViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        totalMainAmount = 0
-        foodOrder.removeAll()
-        deletCartDetails()
+    /*
+    // MARK: - View Cart Button Action
+    */
+    @objc func viewCartButton(){
+
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "goToCart", sender: self)
+
+        }
     }
     
-    //Api Call's
+    /*
+    // MARK: - Get API
+    */
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "http://192.168.2.226:3000/res/restaurents/resdetail")
+        let url = URL(string: "\(urlAPILocation)res/restaurents/resdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -140,89 +185,22 @@ class RestaurentDetailTableViewController: UITableViewController{
                     foodModel.foodImage = foodPhoto.string!
                     self.tableView.reloadData()
                     self.foodMenuArray.append(foodModel)
+                    
                 }
+                activityIndicatorView.stopAnimating()
+                VW_overlay.isHidden = true
             }
         }
         
         task.resume()
-    }
-    func cartDetailApi(r_id:Int,email:String){
         
-        let url = URL(string: "http://192.168.2.226:3000/order/cartdetails")
-        var request = URLRequest(url: url!)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        let parameters: [String: Any] = ["r_id":r_id,"email":email]
-        request.httpBody = parameters.percentEncoded()
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-
-            guard let data = data,
-                let response = response as? HTTPURLResponse,
-                error == nil else {
-                print("error", error ?? "Unknown error")
-                return
-            }
-
-            guard (200 ... 299) ~= response.statusCode else {
-                print("statusCode should be 2xx, but is \(response.statusCode)")
-                print("response = \(response)")
-                return
-            }
-            let js = try! JSON(data: data)
-            for i in 0..<js.count{
-                if js["message"] != "no items !"{
-                        DispatchQueue.main.async(){
-                            let cart = Cart()
-                            cart.foodId = js[i]["f_id"].int!
-                            cart.qty = js[i]["qty"].int!
-                            cart.amount = js[i]["amount"].int!
-                            cart.total_amount = js[i]["total_amount"].int!
-                            self.getFoodDetails(id: js[i]["f_id"].int!)
-                            self.foodOrder.append(cart)
-                        }
-
-                }
-            }
-        }
-        task.resume()
-    }
-    @objc func viewCartButton(){
-        foodOrder.removeAll()
-        cartDetailApi(r_id: rid, email: loginEmail)
-        
-        let actionSheet = UIAlertController(title: "\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
-
-        let view = UIView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 120.0))
-        DispatchQueue.main.async {
-            
-            self.myTableView = UITableView(frame: CGRect(x: 8.0, y: 8.0, width: actionSheet.view.bounds.size.width - 8.0 * 4.5, height: 300))
-            self.myTableView.register(UINib(nibName: "AddToCartDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "MyCell")
-            self.myTableView.dataSource = self
-            self.myTableView.delegate = self
-            view.addSubview(self.myTableView)
-            view.backgroundColor = UIColor.white
-            actionSheet.view.addSubview(view)
-
-            actionSheet.addAction(UIAlertAction(title: "Place Order", style: .default, handler: { (UIAlertAction) in
-                //
-                for i in 0..<self.foodOrder.count{
-                    let f_id = self.foodOrder[i].foodId
-                    let qty = self.foodOrder[i].qty
-                    self.placeOrder(f_id: f_id, qty: qty)
-
-                }
-            }))
-            let height:NSLayoutConstraint = NSLayoutConstraint(item: actionSheet.view, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.80)
-            actionSheet.view.addConstraint(height);
-            actionSheet.addAction(UIAlertAction(title: "Total Price\(totalMainAmount)", style: .default, handler: nil))
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            self.present(actionSheet, animated: true, completion: nil)
-        }
     }
     
-    func deletCartDetails(){
-        let url = URL(string: "http://192.168.2.226:3000/order/delcartdetails")
+    /*
+    // MARK: - Delete Cart API
+    */
+    func deletCartDetails(rid:Int,loginEmail:String){
+        let url = URL(string: "\(urlAPILocation)order/delcartdetails")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -243,99 +221,9 @@ class RestaurentDetailTableViewController: UITableViewController{
             print("response = \(response)")
             return
         }
-            _ = try! JSON(data: data)
-            
+            let js = try! JSON(data: data)
+            print(js)
         }
-        task.resume()
-    }
-
-   func getFoodDetails(id:Int){
-       let url = URL(string: "http://192.168.2.226:3000/food/fooddetails")
-       var request = URLRequest(url: url!)
-       request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-       request.httpMethod = "POST"
-       let parameters: [String: Any] = ["f_id":id]
-       request.httpBody = parameters.percentEncoded()
-           
-       let task = URLSession.shared.dataTask(with: request) { data, response, error in
-           guard let data = data,
-           let response = response as? HTTPURLResponse,
-               error == nil else {
-               print("error", error ?? "Unknown error")
-               return
-           }
-
-           guard (200 ... 299) ~= response.statusCode else {
-               print("statusCode should be 2xx, but is \(response.statusCode)")
-               print("response = \(response)")
-               return
-           }
-           let json = try! JSON(data: data)
-          
-           
-           
-           DispatchQueue.main.async(){
-            for i in 0..<self.foodOrder.count{
-                if self.foodOrder[i].foodId == id{
-                    self.foodOrder[i].foodName = json[0]["food_name"].string!
-                    self.myTableView.reloadData()
-                }
-                
-            }
-            
-           }
-            
-       }
-       
-       task.resume()
-       
-   }
-   func placeOrder(f_id:Int,qty:Int){
-        let url = URL(string: "http://192.168.2.226:3000/orderlist/addtoorderlist")
-        var request = URLRequest(url: url!)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        let parameters: [String: Any] = ["r_id":rid,"f_id":f_id,"email":loginEmail,"qty":qty,"address":"","payment_type":"Cash","total_amount":totalMainAmount]
-        request.httpBody = parameters.percentEncoded()
-            
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data,
-            let response = response as? HTTPURLResponse,
-                error == nil else {
-                print("error", error ?? "Unknown error")
-                return
-            }
-
-            guard (200 ... 299) ~= response.statusCode else {
-                print("statusCode should be 2xx, but is \(response.statusCode)")
-                print("response = \(response)")
-                return
-            }
-            let json = try! JSON(data: data)
-           
-            
-            
-            DispatchQueue.main.async(){
-             
-                if json["message"] == "Order added to Order List"{
-                    let alert = UIAlertController(title: "Place Order", message: "Your Order successfully placed.Our Caption sortly order your food at your place. Thank You for chossing us", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default, handler:nil)
-                    let cancelOrder = UIAlertAction(title: "Cancel Order", style: .cancel) { (UIAlertAction) in
-                        //
-                    }
-                    alert.addAction(action)
-                    alert.addAction(cancelOrder)
-                    self.present(alert, animated: true, completion: nil)
-                }
-                else{
-                    let alert = UIAlertController(title: "Place Order", message: "Something went wrong please try again!!!", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }
-        }
-        
         task.resume()
     }
 }

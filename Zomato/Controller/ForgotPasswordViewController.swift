@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
-
+    //Outlet's
     @IBOutlet var fourthOtpTextField: UITextField!
     @IBOutlet var thirdOtpTextField: UITextField!
     @IBOutlet var secondOtpTextField: UITextField!
@@ -25,16 +25,24 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
     }
-    
+    /*
+    // MARK: - Reset Button Action
+    */
     @IBAction func resetPasswordButton(_ sender: UIButton) {
         changePasswordApi()
     }
+    /*
+    // MARK: - Textfield delegate set
+    */
     func delegateTextField(){
         firstOtpTextField.delegate = self
         secondOtpTextField.delegate = self
         thirdOtpTextField.delegate = self
         fourthOtpTextField.delegate = self
     }
+    /*
+    // MARK: - Update UI
+    */
     func updateUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
         firstOtpTextField.isHidden = true
@@ -57,18 +65,21 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
         resetPasswordButtonOultlet.layer.borderWidth = 1.0
         resetPasswordButtonOultlet.layer.borderColor = gray.cgColor
     }
+    /*
+    // MARK: - For Dismiss Keyboard
+    */
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         emailLabel.resignFirstResponder()
         verifyEmailApi()
         passwordLabel.resignFirstResponder()
         
     }
-    
-    
-    
+    /*
+    // MARK: - API (Verifiy Email)
+    */
     func verifyEmailApi(){
         let email = emailLabel.text
-        let url = URL(string: "http://192.168.2.226:3000/users/forgotpass")
+        let url = URL(string: "\(urlAPILocation)users/forgotpass")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -111,10 +122,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                 }
             }else if json["message"] == "Email does not exits"{
                 DispatchQueue.main.async(){
-                    let alert = UIAlertController(title: "Forgot Password", message: "This email \(email ?? "0") is not in our database please check agian or register.", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
+                    self.createAlert(message: "This email \(email ?? "0") is not in our database please check agian or register.", buttonTitle: "Ok")
                 }
                 
             }
@@ -123,10 +131,19 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
 
         task.resume()
     }
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Forgot Password", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    /*
+    // MARK: - API (Change Password)
+    */
     func changePasswordApi(){
         let email = emailLabel.text
         let password = passwordLabel.text
-        let url = URL(string: "http://192.168.2.226:3000/users/changepass")
+        let url = URL(string: "\(urlAPILocation)users/changepass")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -150,19 +167,17 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
             if json["message"] == "Password Changed"{
                 DispatchQueue.main.async(){
                     let alert = UIAlertController(title: "Forgot Password", message: "Password Successfully changed!", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
+                        let action = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
                         //
                         self.performSegue(withIdentifier: "goToVerifiedLogin", sender: self)
-                    }
+                        }
                     alert.addAction(action)
                     self.present(alert, animated: true, completion: nil)
                 }
             }else if json["message"] == "Email does not exits"{
                 DispatchQueue.main.async(){
-                    let alert = UIAlertController(title: "Forgot Password", message: "This email \(String(describing: email)) is not in our database please verify or register.", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
+                    
+                    self.createAlert(message: "This email \(String(describing: email)) is not in our database please verify or register.", buttonTitle: "Ok")
                 }
                 
             }
@@ -171,6 +186,9 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
 
         task.resume()
     }
+    /*
+    // MARK: - TextField Delegate Method
+    */
     @objc func textFieldDidChange(textField: UITextField){
 
         let text = textField.text
@@ -193,10 +211,13 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
 
         }
     }
+    /*
+    // MARK: - API (Verify Otp)
+    */
     func verifyOTP(){
         let otp = "\(firstOtpTextField.text ?? "")"+"\(secondOtpTextField.text ?? "")"+"\(thirdOtpTextField.text ?? "")"+"\(fourthOtpTextField.text ?? "")"
         let email = emailLabel.text
-        let url = URL(string: "http://192.168.2.226:3000/users/verifyotp")
+        let url = URL(string: "\(urlAPILocation)users/verifyotp")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -230,10 +251,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                 }
             }else if json["message"] == "Wrong OTP"{
                 DispatchQueue.main.async(){
-                    let alert = UIAlertController(title: "Forgot Password", message: "OTP is wrong", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
+                    self.createAlert(message: "OTP is wrong", buttonTitle: "Ok")
                 }
                 
             }

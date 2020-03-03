@@ -8,36 +8,48 @@
 
 import UIKit
 import SwiftyJSON
+
 class ProfileViewController: UIViewController {
     let userDefault = UserDefaults.standard
+    
+    // Outlet's
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
     @IBOutlet var userEmailLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var phoneNumberLabel: UILabel!
     @IBOutlet var fullNameLabel: UILabel!
-    
     @IBOutlet var logoutOutlet: UIButton!
+    
+    /*
+    // MARK: - View's Override Function
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         logoutOutlet.isUserInteractionEnabled = true
         getProfileApi(email: loginEmail)
         // Do any additional setup after loading the view.
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         scrollViewOutlet.bounces = false
-        scrollViewOutlet.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+100)
+
         scrollViewOutlet.contentSize.width = 1.0
     }
+    
+    /*
+    // MARK: - Logout Button Action
+    */
     @IBAction func logOutButton(_ sender: UIButton) {
         userDefault.removeObject(forKey: "usersignedin")
         userDefault.synchronize()
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
+    /*
+    // MARK: - Get API
+    */
     func getProfileApi(email:String){
-        let url = URL(string: "http://192.168.2.226:3000/users/profiledetails")
+        let url = URL(string: "\(urlAPILocation)users/profiledetails")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -75,7 +87,6 @@ class ProfileViewController: UIViewController {
                 }
             }
         }
-
         task.resume()
     }
 }

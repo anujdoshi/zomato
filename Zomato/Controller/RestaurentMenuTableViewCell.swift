@@ -37,7 +37,9 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         steeperOutlet.isHidden = true
         steeperOutlet.addTarget(self, action: #selector(self.valueChanged(stepper:)), for: .valueChanged)
     }
-    
+    /*
+    // MARK: - Update UI
+    */
     func updateUI(){
         imageViewFood.layer.borderWidth = 1.0
         imageViewFood.layer.cornerRadius = 15.0
@@ -46,7 +48,9 @@ class RestaurentMenuTableViewCell: UITableViewCell{
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+    /*
+    // MARK: - Add Button Action
+    */
     @IBAction func addButton(_ sender: UIButton) {
         
         addButtonOutlet.isHidden = true
@@ -56,7 +60,9 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         steeperOutlet.maximumValue = 10.0
         
     }
-    
+    /*
+    // MARK: - Stepper Value Change Function
+    */
     @objc func valueChanged(stepper: GMStepper){
         
         if steeperOutlet.value == 0{
@@ -72,9 +78,11 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         oldValue = Int(stepper.value)
         getFoodDetails(id: steeperOutlet.tag,qty: Int(stepper.value))
     }
-    
+    /*
+    // MARK: - API
+    */
     func getFoodDetails(id:Int,qty:Int){
-        let url = URL(string: "http://192.168.2.226:3000/food/fooddetails")
+        let url = URL(string: "\(urlAPILocation)food/fooddetails")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -120,9 +128,12 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         task.resume()
         
     }
+    /*
+    // MARK: - API(Add To Cart)
+    */
     func addToCart(id:Int,qty:Int,amount:Int){
         
-        let url = URL(string: "http://192.168.2.226:3000/order/addtocart")
+        let url = URL(string: "\(urlAPILocation)order/addtocart")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

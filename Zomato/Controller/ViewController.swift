@@ -8,16 +8,26 @@
 
 import UIKit
 class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate{
-    //View Outlet's
+    /*
+    // MARK: - View's Outlet
+    */
     @IBOutlet weak var sliderCollectionView: UICollectionView!
-    // Button Outlet's
+    /*
+    // MARK: - Button's Outlet
+    */
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
+    /*
+    // MARK: - Extra variable
+    */
     let userDefaullt = UserDefaults.standard
     var timer = Timer()
     var counter = 0
-    var imgArr = [UIImage(named: "food"),UIImage(named: "food1"),UIImage(named: "food2"),UIImage(named: "food3"),UIImage(named: "food4"),UIImage(named: "food5")]
     
+    var imgArr = [UIImage(named: "food"),UIImage(named: "food1"),UIImage(named: "food2"),UIImage(named: "food3"),UIImage(named: "food4"),UIImage(named: "food5")]
+    /*
+    // MARK: - View Override method
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -32,6 +42,9 @@ class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionV
             performSegue(withIdentifier: "goToHome", sender: self)
         }
     }
+    /*
+    // MARK: - Update UI
+    */
     func updateUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
         registerButton.layer.cornerRadius = 15.0
@@ -41,6 +54,9 @@ class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionV
         loginButton.layer.borderWidth = 1.0
         loginButton.layer.borderColor = gray.cgColor
     }
+    /*
+    // MARK: - Change Image
+    */
     @objc func changeImage() {
     
         if counter < imgArr.count {
@@ -56,6 +72,9 @@ class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionV
         }
         
     }
+    /*
+    // MARK: - Collection View Method
+    */
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imgArr.count
     }
@@ -67,10 +86,16 @@ class ViewController: UIViewController ,UICollectionViewDataSource,UICollectionV
         }
         return cell
     }
-    
+    /*
+    // MARK: - Register Button Action
+    */
     @IBAction func registerButtonPress(_ sender: UIButton) {
         performSegue(withIdentifier: "goToRegister", sender: self)
     }
+    /*
+    // MARK: - Login Button Action
+    */
+    
     @IBAction func loginButtonPress(_ sender: UIButton) {
         performSegue(withIdentifier: "goToLogin", sender: self)
     }
