@@ -2,16 +2,39 @@ PODS:
   - Alamofire (5.0.2)
   - GeometricLoaders (1.1.1)
   - GMStepper (2.2)
+  - IQKeyboardManagerSwift (6.5.5)
+  - MaterialComponents/ActivityIndicator (93.3.0):
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Application
+    - MDFInternationalization
+    - MotionAnimator (~> 2.0)
+  - "MaterialComponents/ActivityIndicator+ColorThemer (93.3.0)":
+    - MaterialComponents/ActivityIndicator
+    - MaterialComponents/schemes/Color
+  - MaterialComponents/Palettes (93.3.0)
+  - MaterialComponents/private/Application (93.3.0)
+  - MaterialComponents/private/Color (93.3.0)
+  - MaterialComponents/schemes/Color (93.3.0):
+    - MaterialComponents/private/Color
+  - MDFInternationalization (2.0.0)
+  - MotionAnimator (2.8.1):
+    - MotionInterchange (~> 1.6)
+  - MotionInterchange (1.6.0)
   - PureLayout (3.1.5)
   - SkeletonView (1.8.6)
+  - SkyFloatingLabelTextField (3.8.0)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - GeometricLoaders
   - GMStepper
+  - IQKeyboardManagerSwift
+  - MaterialComponents/ActivityIndicator
+  - "MaterialComponents/ActivityIndicator+ColorThemer"
   - PureLayout
   - SkeletonView
+  - SkyFloatingLabelTextField
   - SwiftyJSON
 
 SPEC REPOS:
@@ -19,18 +42,30 @@ SPEC REPOS:
     - Alamofire
     - GeometricLoaders
     - GMStepper
+    - IQKeyboardManagerSwift
+    - MaterialComponents
+    - MDFInternationalization
+    - MotionAnimator
+    - MotionInterchange
     - PureLayout
     - SkeletonView
+    - SkyFloatingLabelTextField
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
   GeometricLoaders: 4fbbeb569cf0ea647c620a9ffb87c9e63812e743
   GMStepper: 89fb106944dfcc3aa3add7164e3ebd463ea2104b
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  MaterialComponents: 6b2eb24aa0c1d1a6453f05a6bbe3ed6c80843161
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
+  MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   SkeletonView: 0bf463145522c0c551b76a829b397e2a15a16d46
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 51895f11a87f4e3b20cb62eae81296cf2260d632
+PODFILE CHECKSUM: d977d6777b0f1b75f076f29ec88458d71a1e277c
 
 COCOAPODS: 1.8.4

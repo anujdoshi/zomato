@@ -19,7 +19,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQU-CF-TtW">
                         <rect key="frame" x="16" y="9" width="112" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="112" id="Fhq-xe-Dga"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="Fhq-xe-Dga"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                         <color key="textColor" red="0.79607843140000001" green="0.12549019610000001" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,7 +28,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jT-0c-0ek">
                         <rect key="frame" x="16" y="63" width="112" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="112" id="hLW-hG-huJ"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="hLW-hG-huJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>

@@ -11,7 +11,9 @@ import Alamofire
 import SwiftyJSON
 import GeometricLoaders
 import SkeletonView
+import MaterialComponents.MaterialActivityIndicator
 var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+
 var VW_overlay: UIView = UIView()
 var rid:Int = 0
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
@@ -37,6 +39,9 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLayoutSubviews() {
         view.layoutSkeletonIfNeeded()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     /*
     // MARK: - Loader Implementation Function
     */
@@ -44,17 +49,17 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
             VW_overlay = UIView(frame: UIScreen.main.bounds)
             VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
 
-            activityIndicatorView = UIActivityIndicatorView(style: .large)
-            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
-            activityIndicatorView.color = UIColor.red
-            activityIndicatorView.center = VW_overlay.center
-
+            activityIndicatorView.sizeToFit()
             
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
+            activityIndicatorView = UIActivityIndicatorView(style: .large)
+            activityIndicatorView.center = VW_overlay.center
             VW_overlay.addSubview(activityIndicatorView)
             VW_overlay.center = view.center
-        
+            activityIndicatorView.color = UIColor.red
             view.addSubview(VW_overlay)
             activityIndicatorView.startAnimating()
+            
             perform(#selector(self.getApi), with: activityIndicatorView, afterDelay: 0.01)
 
     }

@@ -115,7 +115,7 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                 return
             }
             let json = try! JSON(data: data)
-            
+            print(json)
             if json["message"] == "User Logged succesfully"{
                 DispatchQueue.main.async(){
                     loginEmail = self.emailTextField.text!
@@ -197,14 +197,14 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     func updateUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
         
-        emailTextField.layer.cornerRadius = 15.0
-        emailTextField.layer.borderWidth = 1.0
-        emailTextField.layer.borderColor = gray.cgColor
-        
-        passwordTextField.layer.cornerRadius = 15.0
-        passwordTextField.layer.borderWidth = 1.0
-        passwordTextField.layer.borderColor = gray.cgColor
-        
+//        emailTextField.layer.cornerRadius = 15.0
+//        emailTextField.layer.borderWidth = 1.0
+//        emailTextField.layer.borderColor = gray.cgColor
+//        
+//        passwordTextField.layer.cornerRadius = 15.0
+//        passwordTextField.layer.borderWidth = 1.0
+//        passwordTextField.layer.borderColor = gray.cgColor
+//        
         loginButtonOutlet.layer.cornerRadius = 15.0
         loginButtonOutlet.layer.borderWidth = 1.0
         loginButtonOutlet.layer.borderColor = gray.cgColor

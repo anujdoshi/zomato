@@ -12,4 +12,8 @@ target 'Zomato' do
     pod 'GMStepper'
     pod 'PureLayout'
     pod 'SkeletonView'
+    pod 'MaterialComponents/ActivityIndicator'
+    pod 'MaterialComponents/ActivityIndicator+ColorThemer'
+    pod 'IQKeyboardManagerSwift'
+    pod 'SkyFloatingLabelTextField'
 end

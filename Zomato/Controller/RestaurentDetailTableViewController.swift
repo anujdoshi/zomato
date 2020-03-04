@@ -84,7 +84,6 @@ class RestaurentDetailTableViewController: UITableViewController{
             activityIndicatorView.color = UIColor.red
             activityIndicatorView.center = VW_overlay.center
 
-            
             VW_overlay.addSubview(activityIndicatorView)
             VW_overlay.center = view.center
         

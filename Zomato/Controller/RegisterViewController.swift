@@ -86,29 +86,29 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
     */
     func updateTextFieldUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
-        emailTextField.layer.cornerRadius = 15.0
-        emailTextField.layer.borderWidth = 1.0
-        emailTextField.layer.borderColor = gray.cgColor
-        
-        passwordTextField.layer.cornerRadius = 15.0
-        passwordTextField.layer.borderWidth = 1.0
-        passwordTextField.layer.borderColor = gray.cgColor
-        
-        nameTextField.layer.cornerRadius = 15.0
-        nameTextField.layer.borderWidth = 1.0
-        nameTextField.layer.borderColor = gray.cgColor
-        
-        phoneNumberTextField.layer.cornerRadius = 15.0
-        phoneNumberTextField.layer.borderWidth = 1.0
-        phoneNumberTextField.layer.borderColor = gray.cgColor
-        
-        addressTextField.layer.cornerRadius = 15.0
-        addressTextField.layer.borderWidth = 1.0
-        addressTextField.layer.borderColor = gray.cgColor
-        
-        cityTextField.layer.cornerRadius = 15.0
-        cityTextField.layer.borderWidth = 1.0
-        cityTextField.layer.borderColor = gray.cgColor
+//        emailTextField.layer.cornerRadius = 15.0
+//        emailTextField.layer.borderWidth = 1.0
+//        emailTextField.layer.borderColor = gray.cgColor
+//        
+//        passwordTextField.layer.cornerRadius = 15.0
+//        passwordTextField.layer.borderWidth = 1.0
+//        passwordTextField.layer.borderColor = gray.cgColor
+//        
+//        nameTextField.layer.cornerRadius = 15.0
+//        nameTextField.layer.borderWidth = 1.0
+//        nameTextField.layer.borderColor = gray.cgColor
+//        
+//        phoneNumberTextField.layer.cornerRadius = 15.0
+//        phoneNumberTextField.layer.borderWidth = 1.0
+//        phoneNumberTextField.layer.borderColor = gray.cgColor
+//        
+//        addressTextField.layer.cornerRadius = 15.0
+//        addressTextField.layer.borderWidth = 1.0
+//        addressTextField.layer.borderColor = gray.cgColor
+//        
+//        cityTextField.layer.cornerRadius = 15.0
+//        cityTextField.layer.borderWidth = 1.0
+//        cityTextField.layer.borderColor = gray.cgColor
         
         registerButtonOutlet.layer.cornerRadius = 15.0
         registerButtonOutlet.layer.borderWidth = 1.0
@@ -177,18 +177,18 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
             let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
             let isValidateName = self.validation.validateName(name: name)
             if (isValidateName == false) {
-                highlightTextField(textfield: nameTextField,color: UIColor.red)
+                //highlightTextField(textfield: nameTextField,color: UIColor.red)
                   return
             }else{
-                highlightTextField(textfield: nameTextField,color: gray)
+                //highlightTextField(textfield: nameTextField,color: gray)
             }
             let isValidateEmail = self.validation.validateEmailId(emailID: email)
             if (isValidateEmail == false) {
-                highlightTextField(textfield: emailTextField,color: UIColor.red)
+                //highlightTextField(textfield: emailTextField,color: UIColor.red)
                 return
             }else{
                 let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
-                highlightTextField(textfield: emailTextField,color: gray)
+                //highlightTextField(textfield: emailTextField,color: gray)
             }
 //            let isValidatePass = self.validation.validatePassword(password: password)
 //            if (isValidatePass == false) {
@@ -233,17 +233,18 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
                     if let json = response.data {
                         do{
                             let data = try JSON(data: json)
-                            if data["message"] == "Email Alreay Exists"{
+                            print(data)
+                            if data["message"] == "Email Already Exists"{
                                 DispatchQueue.main.async(){
                                     self.createAlert(message: "This email is already exists!", buttonTitle: "Ok")
                                 }
-                            }else if data["message"] == "Success!"{
+                            }else if data["message"] == "Registered Successfully"{
                                 DispatchQueue.main.async(){
                                     loginEmail = self.emailTextField.text!
                                     self.userDefaullt.set(true, forKey: "usersignedin")
                                     self.userDefaullt.synchronize()
                                     self.userDefaullt.set(email, forKey: "usersignedinemail")
-                                    self.performSegue(withIdentifier: "goToHomeFromRegister", sender: self)
+                                    //self.performSegue(withIdentifier: "goToHomeFromRegister", sender: self)
                                 }
                             }else{
                                 

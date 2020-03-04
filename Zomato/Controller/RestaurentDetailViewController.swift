@@ -40,20 +40,15 @@ class RestaurentDetailViewController: UIViewController {
     func loadingActivity(){
             VW_overlay = UIView(frame: UIScreen.main.bounds)
             VW_overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-
             activityIndicatorView = UIActivityIndicatorView(style: .large)
             activityIndicatorView.frame = CGRect(x: 0, y: 0, width: activityIndicatorView.bounds.size.width, height: activityIndicatorView.bounds.size.height)
             activityIndicatorView.color = UIColor.red
             activityIndicatorView.center = VW_overlay.center
-
-            
             VW_overlay.addSubview(activityIndicatorView)
             VW_overlay.center = view.center
-        
             view.addSubview(VW_overlay)
             activityIndicatorView.startAnimating()
             perform(#selector(self.getRestaurentDetail), with: activityIndicatorView, afterDelay: 0.01)
-
     }
     @objc func getRestaurentDetail(){
             getRestaurentDetailApi(id: rid)
@@ -89,10 +84,10 @@ class RestaurentDetailViewController: UIViewController {
                 let urlString = try! url?.asURL()
                 let datas = NSData(contentsOf: urlString!)
                 self.restaurentName.text = js[0]["restaurant_name"].string!
-                self.restaurentHours.text = "Opening Hours:  \(js[0]["opening_hours"])"
-                self.restaurentAddress.text = "Address:  \(js[0]["address"])"
-                self.restaurentPhoneNumber.text = "Phone Number: \(js[0]["phone_no"])"
-                self.restaurentDetails.text = "Details: \(js[0]["cuisin_type"])"
+                self.restaurentHours.text = "⏰ Opening Hours:\(js[0]["opening_hours"])"
+                self.restaurentAddress.text = "🏠 Address:  \(js[0]["address"])"
+                self.restaurentPhoneNumber.text = "📞 Phone Number: \(js[0]["phone_no"])"
+                self.restaurentDetails.text = "● Details: \(js[0]["cuisin_type"])"
                 self.imageView.image = UIImage(data: (datas as Data?)!)
             }
         }
