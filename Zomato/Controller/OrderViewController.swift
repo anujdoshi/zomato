@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+
 class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var orderArray = [UserOrder]()
     
@@ -16,7 +17,12 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "OrderTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        orderArray.removeAll()
         loadingActivity()
+        
     }
     /*
     // MARK: - Table View Method
@@ -28,15 +34,18 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! OrderTableViewCell
         
-//        let url = URL(string: orderArray[indexPath.row].restaurentImage)
-//
-//        let data = try! Data(contentsOf: url!)
-        cell.foodOrderDetails.isEditable = true
+        if let url = URL(string: orderArray[indexPath.row].restaurentImage){
+            do{
+                let data = try Data(contentsOf: url)
+                cell.restaurentImage.image = UIImage(data: data)
+            }catch{
+                
+            }
+        }
         cell.restaurentName.text = orderArray[indexPath.row].restaurentName
         cell.foodOrderDetails.text = "\(orderArray[indexPath.row].qty)=>\(orderArray[indexPath.row].foodName)"
         cell.totalAmount.text = "\(orderArray[indexPath.row].total_amount)"
         cell.foodOrderOn.text = orderArray[indexPath.row].date_time
-        //cell.restaurentImage.image = UIImage(data: data as Data)
         return cell
     }
     /*
