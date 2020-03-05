@@ -14,13 +14,7 @@ struct addToCart:Encodable {
     var r_id:Int = 0
     var email:String = ""
 }
-var totalMainAmount = 0
-var totalItem = 0
-//Configure a custom view
-var uiView:UIView = UIView()
-let itemLabel = UILabel(frame: CGRect(x:3,y:10,width: 100,height: 30))
-let priceLabel = UILabel(frame: CGRect(x: 3, y: 30, width: 90, height: 30))
-let viewCart = UIButton()
+
 
 class RestaurentDetailTableViewController: UITableViewController{
     // Variable
@@ -94,7 +88,6 @@ class RestaurentDetailTableViewController: UITableViewController{
     }
     @objc func getRestaurentDetail(){
             getRestaurentDetailApi(id: restaurentId)
-            
     }
     /*
     // MARK: - Tableview Method
