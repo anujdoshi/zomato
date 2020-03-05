@@ -174,7 +174,7 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
             let _ = phoneNumberTextField.text else {
                     return
             }
-            let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
+        let _ : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
             let isValidateName = self.validation.validateName(name: name)
             if (isValidateName == false) {
                 //highlightTextField(textfield: nameTextField,color: UIColor.red)
@@ -187,7 +187,7 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
                 //highlightTextField(textfield: emailTextField,color: UIColor.red)
                 return
             }else{
-                let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
+                let _ : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
                 //highlightTextField(textfield: emailTextField,color: gray)
             }
 //            let isValidatePass = self.validation.validatePassword(password: password)

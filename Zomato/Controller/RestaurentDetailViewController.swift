@@ -26,14 +26,8 @@ class RestaurentDetailViewController: UIViewController,UITableViewDelegate,UITab
     var id :Int = 0
     var foodMenuArray = [RestaurentMenuModel]()
     
-    private var NUMBER_OF_ROWS: Int = 0
-    private let ROW_HEIGHT: CGFloat = 75.0
-    private let MINIMUM_CONSTANT_VALUE: CGFloat = -150.0 /// This is the hidable view's height
-
-    weak var hidableViewTopConstraint: NSLayoutConstraint! /// This is an outlet from your storyboard
-    private var lastContentOffset: CGFloat = 0.0
     //Outlet
-    //@IBOutlet var scrollView: UIScrollView!
+    
     @IBOutlet var restaurentPhoneNumber: UILabel!
     @IBOutlet var restaurentHours: UILabel!
     @IBOutlet var restaurentName: UILabel!
@@ -85,7 +79,6 @@ class RestaurentDetailViewController: UIViewController,UITableViewDelegate,UITab
         viewCart.addTarget(self, action: #selector(self.viewCartButton), for: .touchUpInside)
         uiview.isHidden = true
         uiView = uiview
-        //getRestaurentDetailApi(id: restaurentId)
     }
     /*
     // MARK: - Loader Implementation Function
@@ -150,15 +143,14 @@ class RestaurentDetailViewController: UIViewController,UITableViewDelegate,UITab
         activityIndicatorView.stopAnimating()
         VW_overlay.isHidden = true
     }
-    
+    /*
+    // MARK: - TableView Method
+    */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //
-        NUMBER_OF_ROWS = foodMenuDetailsArray.count
         return foodMenuDetailsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurentMenuTableViewCell
         let urlString = try! foodMenuDetailsArray[indexPath.row].foodImage.asURL()
         let data = NSData(contentsOf: urlString)

@@ -34,6 +34,7 @@ class ProfileViewController: UIViewController {
         scrollViewOutlet.bounces = false
 
         scrollViewOutlet.contentSize.width = 1.0
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     /*
@@ -44,6 +45,18 @@ class ProfileViewController: UIViewController {
         userDefault.synchronize()
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
+    }
+    /*
+    // MARK: - Change Password Button Action
+    */
+    @IBAction func changePasswordButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToChangePassword", sender: self)
+    }
+    /*
+    // MARK: - Edit Profile Button Action
+    */
+    @IBAction func editProfileButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToEditProfile", sender: self)
     }
     /*
     // MARK: - Get API

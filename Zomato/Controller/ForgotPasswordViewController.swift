@@ -15,12 +15,15 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet var secondOtpTextField: UITextField!
     @IBOutlet var firstOtpTextField: UITextField!
     @IBOutlet var resetPasswordButtonOultlet: UIButton!
+    
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var passwordLabel: UITextField!
     @IBOutlet var emailLabel: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         delegateTextField()
+    
         // Do any additional setup after loading the view.
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
@@ -29,7 +32,12 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     // MARK: - Reset Button Action
     */
     @IBAction func resetPasswordButton(_ sender: UIButton) {
-        changePasswordApi()
+        if resetPasswordButtonOultlet.currentTitle == "Reset Password"{
+            verifyEmailApi()
+        }else if resetPasswordButtonOultlet.currentTitle == "Change Password"{
+            changePasswordApi()
+        }
+        
     }
     /*
     // MARK: - Textfield delegate set
@@ -51,7 +59,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
         fourthOtpTextField.isHidden = true
         
         passwordLabel.isHidden = true
-        resetPasswordButtonOultlet.isHidden = true
+        
         
         emailLabel.layer.cornerRadius = 15.0
         emailLabel.layer.borderWidth = 1.0
@@ -70,7 +78,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     */
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         emailLabel.resignFirstResponder()
-        verifyEmailApi()
+        
         passwordLabel.resignFirstResponder()
         
     }
@@ -247,7 +255,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                     self.fourthOtpTextField.isHidden = true
                     self.passwordLabel.isHidden = false
                     self.resetPasswordButtonOultlet.isHidden = false
-                    
+                    self.resetPasswordButtonOultlet.setTitle("Change Password", for: .normal)
                 }
             }else if json["message"] == "Wrong OTP"{
                 DispatchQueue.main.async(){

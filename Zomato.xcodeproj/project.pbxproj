@@ -28,6 +28,7 @@
 		ED456DAE240791C9006443EE /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED456DAD240791C9006443EE /* Cart.swift */; };
 		ED456DB12407B1DE006443EE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED456DB02407B1DE006443EE /* Color.swift */; };
 		ED64929E2404EA500061F058 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */; };
+		ED64D6502410E130004CE465 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED64D64F2410E130004CE465 /* EditProfileViewController.swift */; };
 		ED6C5ADB23FD4D1200B9BB47 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */; };
 		ED6E20E223FE547D00CCC881 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */; };
 		ED6E20E423FE63CB00CCC881 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E20E323FE63CB00CCC881 /* Validation.swift */; };
@@ -38,6 +39,7 @@
 		ED75AA09240D313B00EC580A /* PlaceOrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */; };
 		ED75BB32240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */; };
 		ED75BB33240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */; };
+		ED78DF472410CB9C00800C82 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED78DF462410CB9C00800C82 /* ChangePasswordViewController.swift */; };
 		ED99E4FF2403ADFE00123072 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */; };
 		ED99E5032403DD8D00123072 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99E5022403DD8D00123072 /* Order.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,7 @@
 		ED456DAD240791C9006443EE /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		ED456DB02407B1DE006443EE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		ED64D64F2410E130004CE465 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		ED6C5ADA23FD4D1200B9BB47 /* SegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
 		ED6E20E123FE547D00CCC881 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED6E20E323FE63CB00CCC881 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 		ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceOrderDetailsViewController.swift; sourceTree = "<group>"; };
 		ED75BB30240927E70095A0B9 /* AddToCartDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		ED75BB31240927E70095A0B9 /* AddToCartDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToCartDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		ED78DF462410CB9C00800C82 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		ED99E4FE2403ADFE00123072 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		ED99E5022403DD8D00123072 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		EDBE926F2403EFF5006AE587 /* libAlamofire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAlamofire.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +189,8 @@
 				ED64929D2404EA500061F058 /* ForgotPasswordViewController.swift */,
 				ED0FD865240D10AA00240BC6 /* OrderViewController.swift */,
 				ED75AA08240D313B00EC580A /* PlaceOrderDetailsViewController.swift */,
+				ED78DF462410CB9C00800C82 /* ChangePasswordViewController.swift */,
+				ED64D64F2410E130004CE465 /* EditProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -351,12 +357,14 @@
 				ED456DAE240791C9006443EE /* Cart.swift in Sources */,
 				ED6E20E423FE63CB00CCC881 /* Validation.swift in Sources */,
 				ED99E5032403DD8D00123072 /* Order.swift in Sources */,
+				ED78DF472410CB9C00800C82 /* ChangePasswordViewController.swift in Sources */,
 				ED0FD866240D10AA00240BC6 /* OrderViewController.swift in Sources */,
 				ED6E20EE23FEB91D00CCC881 /* RestaurentModel.swift in Sources */,
 				ED0C90CC23FBD0E9000FD8E8 /* SceneDelegate.swift in Sources */,
 				ED75AA09240D313B00EC580A /* PlaceOrderDetailsViewController.swift in Sources */,
 				ED456DB12407B1DE006443EE /* Color.swift in Sources */,
 				ED02816B240E6793009A3985 /* UserOrder.swift in Sources */,
+				ED64D6502410E130004CE465 /* EditProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
