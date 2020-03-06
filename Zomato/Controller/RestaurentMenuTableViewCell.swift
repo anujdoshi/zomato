@@ -86,6 +86,7 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["f_id":id]
         request.httpBody = parameters.percentEncoded()
             
@@ -94,6 +95,7 @@ class RestaurentMenuTableViewCell: UITableViewCell{
             let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                
                 return
             }
 
@@ -137,8 +139,7 @@ class RestaurentMenuTableViewCell: UITableViewCell{
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        
-        
+        request.headers = header
         let parameters: [String: Any] = ["r_id":rid,"email":loginEmail,"f_id":id,"qty":qty,"amount":amount,"total_amount":(amount * qty)]
         request.httpBody = parameters.percentEncoded()
         
@@ -157,7 +158,8 @@ class RestaurentMenuTableViewCell: UITableViewCell{
             }
             let js = try! JSON(data: data)
             if js["message"] == "Order added to Cart"{
-                
+                self.steeperOutlet.isHidden = true
+                self.addButtonOutlet.isHidden = false
             }
         }
 

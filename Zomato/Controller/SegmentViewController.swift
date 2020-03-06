@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-let urlAPILocation = "http://192.168.2.226:3000/"
+let urlAPILocation = "http://192.168.2.226:4000/"
 class SegmentViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate{
     /*
     // MARK: - TextField's Outlet
@@ -106,6 +106,14 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                            exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -115,19 +123,22 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
                 return
             }
             let json = try! JSON(data: data)
-            print(json)
+            
             if json["message"] == "User Logged succesfully"{
                 DispatchQueue.main.async(){
                     loginEmail = self.emailTextField.text!
+                    authToken = json["auth_token"].string!
+                    print(authToken)
                     self.userDefaullt.set(true, forKey: "usersignedin")
                     self.userDefaullt.synchronize()
+                    self.userDefaullt.set(authToken, forKey: "userauthtoken")
                     self.userDefaullt.set(email, forKey: "usersignedinemail")
                     self.performSegue(withIdentifier: "goToHomeFromLogin", sender: self)
                 }
             }
-            else if json["message"] == "Incoorect password or Email" {
+            else if json["message"] == "Password not match" {
                 DispatchQueue.main.async(){
-                    self.createAlert(message: "Incorect Email or Password Please Try Agian!!!", buttonTitle: "Ok")
+                    self.createAlert(message: "Password not match.Please Try Agian!!!", buttonTitle: "Ok")
                     
                 }
                 
@@ -196,15 +207,6 @@ class SegmentViewController: UIViewController,UICollectionViewDataSource,UIColle
     */
     func updateUI(){
         let gray : UIColor = UIColor(red:0.96, green:0.96, blue:0.95, alpha:1.0)
-        
-//        emailTextField.layer.cornerRadius = 15.0
-//        emailTextField.layer.borderWidth = 1.0
-//        emailTextField.layer.borderColor = gray.cgColor
-//        
-//        passwordTextField.layer.cornerRadius = 15.0
-//        passwordTextField.layer.borderWidth = 1.0
-//        passwordTextField.layer.borderColor = gray.cgColor
-//        
         loginButtonOutlet.layer.cornerRadius = 15.0
         loginButtonOutlet.layer.borderWidth = 1.0
         loginButtonOutlet.layer.borderColor = gray.cgColor

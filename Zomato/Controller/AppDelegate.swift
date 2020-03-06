@@ -9,6 +9,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 var loginEmail:String = ""
+var authToken:String = ""
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         if userDefaullt.bool(forKey: "usersignedin") == true{
             loginEmail = userDefaullt.value(forKey: "usersignedinemail") as! String
-            
+            authToken = userDefaullt.value(forKey: "userauthtoken") as! String
             self.userDefaullt.synchronize()
             self.window?.rootViewController?.performSegue(withIdentifier: "goToHome", sender: nil)
         }

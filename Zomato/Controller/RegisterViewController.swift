@@ -233,7 +233,7 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
                     if let json = response.data {
                         do{
                             let data = try JSON(data: json)
-                            print(data)
+                            
                             if data["message"] == "Email Already Exists"{
                                 DispatchQueue.main.async(){
                                     self.createAlert(message: "This email is already exists!", buttonTitle: "Ok")
@@ -241,13 +241,28 @@ class RegisterViewController: UIViewController,UICollectionViewDataSource,UIColl
                             }else if data["message"] == "Registered Successfully"{
                                 DispatchQueue.main.async(){
                                     loginEmail = self.emailTextField.text!
+                                    authToken = data["auth_token"].string!
+                                    print(authToken)
                                     self.userDefaullt.set(true, forKey: "usersignedin")
                                     self.userDefaullt.synchronize()
                                     self.userDefaullt.set(email, forKey: "usersignedinemail")
+                                    self.userDefaullt.set(authToken, forKey: "userauthtoken")
                                     //self.performSegue(withIdentifier: "goToHomeFromRegister", sender: self)
                                 }
+                            }else if data["message"] == "Invalid Username"{
+                                self.createAlert(message: "Full Name length must be grater than 2", buttonTitle: "Ok")
+                            }else if data["message"] == "Invalid Email"{
+                                self.createAlert(message: "Email is invalid", buttonTitle: "Ok")
+                            }else if data["message"] == "Invalid Password"{
+                                self.createAlert(message: "Password length must be grater than 6", buttonTitle: "Ok")
+                            }else if data["message"] == "Invalid Mobile Number"{
+                                self.createAlert(message: "Invalid Mobile number. Mobile number start between 6 to 9", buttonTitle: "Ok")
+                            }else if data["message"] == "Invalid Address"{
+                                self.createAlert(message: "Invalid Address", buttonTitle: "Ok")
+                            }else if data["message"] == "Invalid City"{
+                                self.createAlert(message: "Invalid City", buttonTitle: "Ok")
                             }else{
-                                
+                                self.createAlert(message: "Please Try Again!!! Something went wrong!", buttonTitle: "Ok")
                             }
                         }
                         catch{

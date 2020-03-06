@@ -13,9 +13,11 @@ import GeometricLoaders
 import SkeletonView
 import MaterialComponents.MaterialActivityIndicator
 var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-
+let header:HTTPHeaders = ["auth_token":authToken]
 var VW_overlay: UIView = UIView()
 var rid:Int = 0
+let userDefault = UserDefaults.standard
+
 class RestaurantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     var container: CircleLoader?
     
@@ -59,7 +61,6 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
             activityIndicatorView.color = UIColor.red
             view.addSubview(VW_overlay)
             activityIndicatorView.startAnimating()
-            
             perform(#selector(self.getApi), with: activityIndicatorView, afterDelay: 0.01)
 
     }
@@ -73,13 +74,17 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RestaurantTableViewCell
-        let urlString = try! restaurentArray[indexPath.row].photo.asURL()
-        let data = NSData(contentsOf: urlString)
+        if let url = URL(string: restaurentArray[indexPath.row].photo){
+            do{
+                let data = try Data(contentsOf: url)
+                cell.restaurantImage.image = UIImage(data: data)
+            }catch{
+                
+            }
+        }
         cell.restaurantName.text = restaurentArray[indexPath.row].restauren_name
-        //cell.restaurantPhoneNumber.text = restaurentArray[indexPath.row].phonenumber
         cell.restaurantType.text = restaurentArray[indexPath.row].restaurentType
         cell.openingHours.text = "⏰\(restaurentArray[indexPath.row].openingHour)"
-        cell.restaurantImage.image = UIImage(data: data! as Data)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -94,27 +99,35 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
     @objc func getApi(){
         let jsonUrl = "\(urlAPILocation)res/restaurents"
         let url = URL(string: jsonUrl)
-        AF.request(url!,method:.get).responseJSON(completionHandler: { (response) in
+        
+        AF.request(url!,method:.get,headers: header).responseJSON(completionHandler: { (response) in
             let json : JSON = JSON(response.value!)
-            for i in 0..<json.count{
-                let id = json[i]["r_id"]
-                let name = json[i]["restaurant_name"]
-                let type = json[i]["cuisin_type"]
-                let photo = json[i]["photos"]
-                let opening = json[i]["opening_hours"]
-                let phoneNumber = json[i]["phone_no"]
-                let model = RestaurentModel()
-                model.id = id.int!
-                model.restauren_name = name.string!
-                model.restaurentType = type.string!
-                model.photo = photo.string!
-                model.openingHour = opening.string!
-                model.phonenumber = phoneNumber.string!
-                self.restaurentArray.append(model)
-                self.tableView.reloadData()
+            if json["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                for i in 0..<json.count{
+                    let id = json[i]["r_id"]
+                    let name = json[i]["restaurant_name"]
+                    let type = json[i]["cuisin_type"]
+                    let photo = json[i]["photos"]
+                    let opening = json[i]["opening_hours"]
+                    let phoneNumber = json[i]["phone_no"]
+                    let model = RestaurentModel()
+                    model.id = id.int!
+                    model.restauren_name = name.string!
+                    model.restaurentType = type.string!
+                    model.photo = photo.string!
+                    model.openingHour = opening.string!
+                    model.phonenumber = phoneNumber.string!
+                    self.restaurentArray.append(model)
+                    self.tableView.reloadData()
+                }
+                activityIndicatorView.stopAnimating()
+                VW_overlay.isHidden = true
             }
-            activityIndicatorView.stopAnimating()
-            VW_overlay.isHidden = true
+            
         })
     }
     func getData(json:JSON){
@@ -138,10 +151,11 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func getRestaurentDetailApi(id:Int){
-        let url = URL(string: "\(urlAPILocation)res/restaurents/resdetail")
+        let url = URL(string: "\(urlAPILocation)res/restaurentdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["r_id":id]
         request.httpBody = parameters.percentEncoded()
         
@@ -150,6 +164,14 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -158,20 +180,36 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 print("response = \(response)")
                 return
             }
-
-            let responseString = String(data: data, encoding: .utf8)
-            if responseString != nil{
+            
+            let json = try! JSON(data: data)
+            if json["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
                 DispatchQueue.main.async(){
                     self.performSegue(withIdentifier: "goToDetails", sender: self)
                 }
-                
-            }
-            else{
-                
             }
         }
 
         task.resume()
+    }
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel) { (UIAlertAction) in
+            userDefault.removeObject(forKey: "usersignedin")
+            userDefault.removeObject(forKey: "usersignedinemail")
+            userDefault.removeObject(forKey: "userauthtoken")
+            userDefault.synchronize()
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     /*
     // MARK: - Prepare Segue
@@ -208,6 +246,7 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["food_name":food_name]
         request.httpBody = parameters.percentEncoded()
         
@@ -216,6 +255,14 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -225,11 +272,16 @@ class RestaurantViewController: UIViewController,UITableViewDelegate,UITableView
                 return
             }
             let js = try! JSON(data: data)
-            DispatchQueue.main.async(){
-                self.getData(json: js)
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                DispatchQueue.main.async(){
+                    self.getData(json: js)
+                }
             }
         }
-
         task.resume()
     }
     /*

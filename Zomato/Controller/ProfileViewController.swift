@@ -27,12 +27,12 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         logoutOutlet.isUserInteractionEnabled = true
-        getProfileApi(email: loginEmail)
+        
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
         scrollViewOutlet.bounces = false
-
+        getProfileApi(email: loginEmail)
         scrollViewOutlet.contentSize.width = 1.0
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -42,6 +42,8 @@ class ProfileViewController: UIViewController {
     */
     @IBAction func logOutButton(_ sender: UIButton) {
         userDefault.removeObject(forKey: "usersignedin")
+        userDefault.removeObject(forKey: "usersignedinemail")
+        userDefault.removeObject(forKey: "userauthtoken")
         userDefault.synchronize()
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
@@ -58,6 +60,14 @@ class ProfileViewController: UIViewController {
     @IBAction func editProfileButton(_ sender: UIButton) {
         performSegue(withIdentifier: "goToEditProfile", sender: self)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let editVC = segue.destination as! EditProfileViewController
+        editVC.email = userEmailLabel.text!
+        editVC.address = addressLabel.text!
+        editVC.phoneNumber = Int(phoneNumberLabel.text!)!
+        editVC.city = cityLabel.text!
+        editVC.fullName = fullNameLabel.text!
+    }
     /*
     // MARK: - Get API
     */
@@ -66,6 +76,7 @@ class ProfileViewController: UIViewController {
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["email":email]
         request.httpBody = parameters.percentEncoded()
         
@@ -74,6 +85,14 @@ class ProfileViewController: UIViewController {
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -83,23 +102,45 @@ class ProfileViewController: UIViewController {
                 return
             }
             let js = try! JSON(data: data)
-            DispatchQueue.main.async(){
-                
-                for i in 0..<js.count{
-                    let userName = js[i]["username"]
-                    let email = js[i]["email"]
-                    let mob_no = js[i]["mob_no"]
-                    let address = js[i]["address"]
-                    let city = js[i]["city"]
-                    self.fullNameLabel.text = userName.string!
-                    self.addressLabel.text = address.string!
-                    self.phoneNumberLabel.text = mob_no.string!
-                    self.cityLabel.text = city.string!
-                    self.userEmailLabel.text = email.string!
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                DispatchQueue.main.async(){
                     
+                    for i in 0..<js.count{
+                        let userName = js[i]["username"]
+                        let email = js[i]["email"]
+                        let mob_no = js[i]["mob_no"]
+                        let address = js[i]["address"]
+                        let city = js[i]["city"]
+                        self.fullNameLabel.text = userName.string!
+                        self.addressLabel.text = address.string!
+                        self.phoneNumberLabel.text = mob_no.string!
+                        self.cityLabel.text = city.string!
+                        self.userEmailLabel.text = email.string!
+                        
+                    }
                 }
             }
         }
         task.resume()
+    }
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel) { (UIAlertAction) in
+            self.userDefault.removeObject(forKey: "usersignedin")
+            self.userDefault.removeObject(forKey: "usersignedinemail")
+            self.userDefault.removeObject(forKey: "userauthtoken")
+            self.userDefault.synchronize()
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }

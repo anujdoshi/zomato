@@ -87,7 +87,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     */
     func verifyEmailApi(){
         let email = emailLabel.text
-        let url = URL(string: "\(urlAPILocation)users/forgotpass")
+        let url = URL(string: "\(urlAPILocation)users/forgotpassword")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -99,6 +99,14 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -108,6 +116,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                 return
             }
             let json = try! JSON(data: data)
+            
             if json["message"] == "Verified !! OTP sent in Mail"{
                 DispatchQueue.main.async(){
                     let alert = UIAlertController(title: "Forgot Password", message: "Otp is sent to this email address \(email ?? "0").", preferredStyle: .alert)
@@ -151,7 +160,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     func changePasswordApi(){
         let email = emailLabel.text
         let password = passwordLabel.text
-        let url = URL(string: "\(urlAPILocation)users/changepass")
+        let url = URL(string: "\(urlAPILocation)users/resetpassword")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -172,6 +181,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                 return
             }
             let json = try! JSON(data: data)
+            print(json)
             if json["message"] == "Password Changed"{
                 DispatchQueue.main.async(){
                     let alert = UIAlertController(title: "Forgot Password", message: "Password Successfully changed!", preferredStyle: .alert)
@@ -188,6 +198,16 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                     self.createAlert(message: "This email \(String(describing: email)) is not in our database please verify or register.", buttonTitle: "Ok")
                 }
                 
+            }else if json["message"] == "Please Select Diff. Password"{
+                DispatchQueue.main.async(){
+                    
+                    self.createAlert(message: "Old password and new password can't be same please choose different password!", buttonTitle: "Ok")
+                }
+            }else {
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Something Went wrong try again!!", buttonTitle: "Ok")
+                }
+
             }
             
         }

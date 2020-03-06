@@ -79,6 +79,7 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["email":loginEmail]
         request.httpBody = parameters.percentEncoded()
         
@@ -87,6 +88,14 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                            exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -96,7 +105,12 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 return
             }
             let js = try! JSON(data: data)
-            if js["message"] != "No Orders in OrderList"{
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }
+            else if js["message"] != "No Orders in OrderList"{
                 DispatchQueue.main.async(){
                     
                     for i in 0..<js.count{
@@ -139,10 +153,11 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         task.resume()
     }
     func getRestaurentDetailApi(id:Int,oid:Int){
-        let url = URL(string: "\(urlAPILocation)res/restaurents/resdetail")
+        let url = URL(string: "\(urlAPILocation)res/restaurentdetail")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["r_id":id]
         request.httpBody = parameters.percentEncoded()
         
@@ -151,6 +166,14 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                            exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -160,11 +183,17 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 return
             }
             let js = try! JSON(data: data)
-            
-            DispatchQueue.main.async(){
-                self.orderArray[oid].restaurentName = js[0]["restaurant_name"].string!
-                self.orderArray[oid].restaurentImage = js[0]["photos"].string!
-                self.tableView.reloadData()
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }
+            else{
+                DispatchQueue.main.async(){
+                    self.orderArray[oid].restaurentName = js[0]["restaurant_name"].string!
+                    self.orderArray[oid].restaurentImage = js[0]["photos"].string!
+                    self.tableView.reloadData()
+                }
             }
         }
         
@@ -175,6 +204,7 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["f_id":id]
         request.httpBody = parameters.percentEncoded()
             
@@ -183,6 +213,14 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                            exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -193,14 +231,34 @@ class OrderViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
             let json = try! JSON(data: data)
             
-            
-            DispatchQueue.main.async(){
-                self.orderArray[oid].foodName = json[0]["food_name"].string!
-                self.tableView.reloadData()
+            if json["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }
+            else{
+                DispatchQueue.main.async(){
+                    self.orderArray[oid].foodName = json[0]["food_name"].string!
+                    self.tableView.reloadData()
+                }
             }
         }
-        
         task.resume()
-        
+    }
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel) { (UIAlertAction) in
+            userDefault.removeObject(forKey: "usersignedin")
+            userDefault.removeObject(forKey: "usersignedinemail")
+            userDefault.removeObject(forKey: "userauthtoken")
+            userDefault.synchronize()
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }

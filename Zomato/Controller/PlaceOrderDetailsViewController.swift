@@ -88,6 +88,7 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["r_id":rid,"f_id":f_id,"email":loginEmail,"qty":qty,"address":addressLabel.text!,"payment_type":paymentMethod,"total_amount":totalMainAmount]
         request.httpBody = parameters.percentEncoded()
             
@@ -96,6 +97,14 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
             let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -106,31 +115,37 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
             }
             let json = try! JSON(data: data)
             
-            DispatchQueue.main.async(){
-             
-                if json["message"] == "Order added to Order List"{
-                    let alert = UIAlertController(title: "Place Order", message: "Your Order successfully placed.Our Caption sortly order your food at your place. Thank You for chossing us", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .default, handler:nil)
-                    let cancelOrder = UIAlertAction(title: "Cancel Order", style: .cancel) { (UIAlertAction) in
-                        //
+            
+                if json["message"] == "Wrong Auth Token"{
+                    DispatchQueue.main.async(){
+                        self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
                     }
-                    totalMainAmount = 0
-                    uiView.isHidden = true
-                    alert.addAction(action)
-                    alert.addAction(cancelOrder)
-                    
-                    self.present(alert, animated: true, completion: nil)
-                    self.dismiss(animated: true, completion: nil)
+                }
+                else if json["message"] == "Order added to Order List"{
+                    DispatchQueue.main.async(){
+                        let alert = UIAlertController(title: "Place Order", message: "Your Order successfully placed.Our Caption sortly order your food at your place. Thank You for chossing us", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Ok", style: .default, handler:nil)
+                        let cancelOrder = UIAlertAction(title: "Cancel Order", style: .cancel) { (UIAlertAction) in
+                            //
+                        }
+                        totalMainAmount = 0
+                        uiView.isHidden = true
+                        alert.addAction(action)
+                        alert.addAction(cancelOrder)
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
                 else{
-                    let alert = UIAlertController(title: "Place Order", message: "Something went wrong please try again!!!", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
+                    DispatchQueue.main.async(){
+                        let alert = UIAlertController(title: "Place Order", message: "Something went wrong please try again!!!", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Ok", style: .cancel, handler:nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
-            }
         }
-        
         task.resume()
     }
     func cartDetailApi(r_id:Int,email:String){
@@ -139,6 +154,7 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["r_id":r_id,"email":email]
         request.httpBody = parameters.percentEncoded()
 
@@ -148,6 +164,14 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -157,19 +181,26 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
                 return
             }
             let js = try! JSON(data: data)
-            for i in 0..<js.count{
-                if js["message"] != "no items !"{
-                        DispatchQueue.main.async(){
-                            let cart = Cart()
-                            cart.foodId = js[i]["f_id"].int!
-                            cart.qty = js[i]["qty"].int!
-                            cart.amount = js[i]["amount"].int!
-                            cart.total_amount = js[i]["total_amount"].int!
-                            self.getFoodDetails(id: js[i]["f_id"].int!)
-                            self.foodOrder.append(cart)
-                        }
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                for i in 0..<js.count{
+                    if js["message"] != "no items !"{
+                            DispatchQueue.main.async(){
+                                let cart = Cart()
+                                cart.foodId = js[i]["f_id"].int!
+                                cart.qty = js[i]["qty"].int!
+                                cart.amount = js[i]["amount"].int!
+                                cart.total_amount = js[i]["total_amount"].int!
+                                self.getFoodDetails(id: js[i]["f_id"].int!)
+                                self.foodOrder.append(cart)
+                            }
+                    }
                 }
             }
+            
         }
         task.resume()
     }
@@ -179,6 +210,7 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["f_id":id]
         request.httpBody = parameters.percentEncoded()
             
@@ -187,6 +219,14 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
             let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -196,15 +236,21 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
                 return
             }
             let json = try! JSON(data: data)
-
-            DispatchQueue.main.async(){
-             for i in 0..<self.foodOrder.count{
-                 if self.foodOrder[i].foodId == id{
-                     self.foodOrder[i].foodName = json[0]["food_name"].string!
-                     self.myTableView.reloadData()
-                 }
-             }
+            if json["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                DispatchQueue.main.async(){
+                     for i in 0..<self.foodOrder.count{
+                         if self.foodOrder[i].foodId == id{
+                             self.foodOrder[i].foodName = json[0]["food_name"].string!
+                             self.myTableView.reloadData()
+                         }
+                     }
+                }
             }
+            
         }
         task.resume()
     }
@@ -216,6 +262,7 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
+        request.headers = header
         let parameters: [String: Any] = ["email":email]
         request.httpBody = parameters.percentEncoded()
         
@@ -224,6 +271,14 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
                 let response = response as? HTTPURLResponse,
                 error == nil else {
                 print("error", error ?? "Unknown error")
+                DispatchQueue.main.async(){
+                    let alert = UIAlertController(title: "Server", message: "Could't connect to server please try again after some times", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Ok", style: .cancel) { (UIAlertAction) in
+                                exit(0)
+                    }
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 return
             }
 
@@ -233,11 +288,16 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
                 return
             }
             let js = try! JSON(data: data)
-            DispatchQueue.main.async(){
-                
-                for i in 0..<js.count{
-                    let address = js[i]["address"]
-                    self.addressLabel.text = address.string!
+            if js["message"] == "Wrong Auth Token"{
+                DispatchQueue.main.async(){
+                    self.createAlert(message: "Wrong Authentication please login agian", buttonTitle: "Ok")
+                }
+            }else{
+                DispatchQueue.main.async(){
+                    for i in 0..<js.count{
+                        let address = js[i]["address"]
+                        self.addressLabel.text = address.string!
+                    }
                 }
             }
         }
@@ -294,5 +354,21 @@ class PlaceOrderDetailsViewController: UIViewController,UITableViewDataSource,UI
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    /*
+    // MARK: - Create Alert Button
+    */
+    func createAlert(message:String,buttonTitle:String){
+        let alert = UIAlertController(title: "Login", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: buttonTitle, style: .cancel) { (UIAlertAction) in
+            userDefault.removeObject(forKey: "usersignedin")
+            userDefault.removeObject(forKey: "usersignedinemail")
+            userDefault.removeObject(forKey: "userauthtoken")
+            userDefault.synchronize()
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }
